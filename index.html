@@ -1091,7 +1091,7 @@ Object.assign(L.fa,{ai:"دستیار مدرسه",aiph:"درباره مدرسه �
 /* ΜΕΤΡΗΤΗΣ ΕΠΙΣΚΕΠΤΩΝ (δωρεάν, με Firebase Realtime Database):
    console.firebase.google.com → Create project → Build → Realtime Database → Create (test mode) → αντίγραψε τη διεύθυνση, π.χ. https://ΟΝΟΜΑ-default-rtdb.firebaseio.com
    Βάλ' την στο FB_URL. Χωρίς αυτό ο μετρητής μένει κρυφός. */
-const GROQ_KEY=atob("Z3NrX1ZtQWp2aUhnTGxoSWFXcDU4a1hvV0dkeWIzRlk5WGx5dWlXbXp6dnBkdm90VjBkOVRPMmQ="),GROQ_PROXY="",GROQ_MODEL="llama-3.1-8b-instant",FB_URL="";
+const GROQ_KEY=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,GROQ_PROXY="",GROQ_MODEL="llama-3.1-8b-instant",FB_URL="";
 let GM=GROQ_MODEL;
 async function groqPick(){const r=await fetch("https://api.groq.com/openai/v1/models",{headers:{Authorization:"Bearer "+GROQ_KEY}});if(!r.ok)return;
   const ids=(await r.json()).data.map(m=>m.id),pref=["llama-3.1-8b-instant","llama-3.3-70b-versatile","openai/gpt-oss-20b","openai/gpt-oss-120b"];
