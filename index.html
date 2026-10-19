@@ -3823,16 +3823,15 @@ const lite=()=>de.dataset.performance==="lite"||de.classList.contains("v11-reduc
 const gl=cv.getContext("webgl",{antialias:true,alpha:true,premultipliedAlpha:true,powerPreference:"high-performance"});
 if(!gl){box.classList.add("nogl");return}
 
-/* ---------- geometry: a machined 7 — filleted outline, rounded bevels, an engraved inlay groove on both faces ---------- */
-const OUT0=[[0,10],[6.9,10],[6.9,8.65],[3.75,0],[1.55,0],[4.53,8.15],[0,8.15]].map(([x,y])=>[(x-3.45)/10,(y-5)/10]);
+/* ---------- geometry: the site's logo tile in 3D — a thick rounded square with a raised, square-cut 7 on both faces ---------- */
 const area=p=>p.reduce((s,a,i)=>{const b=p[(i+1)%p.length];return s+a[0]*b[1]-b[0]*a[1]},0)/2;
-const base0=area(OUT0)<0?OUT0.slice().reverse():OUT0.slice();           /* counter-clockwise */
-/* round every corner: convex corners get a bigger radius than the inner (concave) one */
+const ccw=p=>area(p)<0?p.slice().reverse():p.slice();
+const SQ=[[-.5,-.5],[.5,-.5],[.5,.5],[-.5,.5]];
 const fillet=(p,rc,rv,seg)=>{const n=p.length,o=[];for(let i=0;i<n;i++){const A=p[(i+n-1)%n],B=p[i],C=p[(i+1)%n];
   const u=[A[0]-B[0],A[1]-B[1]],v=[C[0]-B[0],C[1]-B[1]],lu=Math.hypot(...u),lv=Math.hypot(...v);u[0]/=lu;u[1]/=lu;v[0]/=lv;v[1]/=lv;
   const cr=(B[0]-A[0])*(C[1]-B[1])-(B[1]-A[1])*(C[0]-B[0]),convex=cr>0,r=convex?rc:rv,ang=Math.acos(Math.max(-1,Math.min(1,u[0]*v[0]+u[1]*v[1]))),t=Math.min(r/Math.tan(ang/2),lu*.45,lv*.45);
   const P0=[B[0]+u[0]*t,B[1]+u[1]*t],P1=[B[0]+v[0]*t,B[1]+v[1]*t];for(let k=0;k<=seg;k++){const s=k/seg,q=1-s;/* quadratic Bezier through the corner = smooth fillet */o.push([q*q*P0[0]+2*q*s*B[0]+s*s*P1[0],q*q*P0[1]+2*q*s*B[1]+s*s*P1[1]])}}return o};
-const poly=fillet(base0,.09,.022,6);
+const poly=fillet(SQ,.17,.17,10);
 function inset(p,d){const n=p.length,L=[];
   for(let i=0;i<n;i++){const a=p[i],b=p[(i+1)%n],dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1e-9,nx=-dy/l,ny=dx/l;L.push([a[0]+nx*d,a[1]+ny*d,dx,dy])}
   return p.map((_,i)=>{const A=L[(i+n-1)%n],B=L[i],den=A[2]*B[3]-A[3]*B[2];if(Math.abs(den)<1e-12)return[B[0],B[1]];const t=((B[0]-A[0])*B[3]-(B[1]-A[1])*B[2])/den;return[A[0]+A[2]*t,A[1]+A[3]*t]})}
@@ -3845,7 +3844,7 @@ function earcut(p){const idx=p.map((_,i)=>i),tri=[];let guard=0;
   while(idx.length>3&&guard++<4000){let cut=false;for(let i=0;i<idx.length;i++){const ia=idx[(i+idx.length-1)%idx.length],ib=idx[i],ic=idx[(i+1)%idx.length],a=p[ia],b=p[ib],c=p[ic];
       if(cross(a,b,c)<=1e-12)continue;if(idx.some(j=>j!==ia&&j!==ib&&j!==ic&&inside(p[j],a,b,c)))continue;tri.push([ia,ib,ic]);idx.splice(i,1);cut=true;break}if(!cut)idx.splice(0,1)}
   if(idx.length===3)tri.push(idx.slice(0,3));return tri}
-const H=.13,Bv=.02,BS=5,V=[],N2=vnorm(poly);
+const H=.075,Bv=.03,BS=6,V=[],N2=vnorm(poly);
 const vtx=(p,n,k)=>V.push(p[0],p[1],p[2],n[0],n[1],n[2],k);
 const strip=(A,B,nA,nB,k)=>{for(let i=0;i<A.length;i++){const j=(i+1)%A.length;vtx(A[i],nA[i],k);vtx(A[j],nA[j],k);vtx(B[j],nB[j],k);vtx(A[i],nA[i],k);vtx(B[j],nB[j],k);vtx(B[i],nB[i],k)}};
 /* rounded bevel rings, front and back */
@@ -3854,15 +3853,19 @@ const rings=[];for(let k=0;k<=BS;k++){const th=k/BS*Math.PI/2,d=Bv*(1-Math.cos(t
   if(sg>0)strip(P(a,a.z),P(b,b.z),Nn(a),Nn(b),1);else strip(P(b,b.z),P(a,a.z),Nn(b),Nn(a),1)}});
 /* side wall */
 {const R0=rings[0].r,z=H-Bv,A=R0.map(q=>[q[0],q[1],-z]),B=R0.map(q=>[q[0],q[1],z]),Nn=N2.map(n=>[n[0],n[1],0]);strip(A,B,Nn,Nn,2)}
-/* faces with an engraved groove: outer band, groove walls + floor, centre panel */
-const F0=rings[BS].r,G0=inset(poly,Bv+.004),G1=inset(poly,Bv+.015),GD=.01;
-[1,-1].forEach(sg=>{const z=sg*H,zf=sg*(H-GD),up=[0,0,sg],P=(R,zz)=>R.map(q=>[q[0],q[1],zz]),U=R=>R.map(()=>up),In=R=>vnorm(R).map(n=>[-n[0],-n[1],0]),Out=R=>vnorm(R).map(n=>[n[0],n[1],0]);
-  const s=(A,B,nA,nB,k)=>sg>0?strip(A,B,nA,nB,k):strip(B,A,nB,nA,k);
-  s(P(F0,z),P(G0,z),U(F0),U(G0),0);s(P(G0,z),P(G0,zf),In(G0),In(G0),3);s(P(G0,zf),P(G1,zf),U(G0),U(G1),3);s(P(G1,zf),P(G1,z),Out(G1),Out(G1),3);
-  earcut(G1).forEach(([a,b,c])=>{const q=i=>[G1[i][0],G1[i][1],z];if(sg>0){vtx(q(a),up,4);vtx(q(b),up,4);vtx(q(c),up,4)}else{vtx(q(a),up,4);vtx(q(c),up,4);vtx(q(b),up,4)}})});
+/* flat yellow faces, front and back */
+const F0=rings[BS].r;
+[1,-1].forEach(sg=>{const z=sg*H,up=[0,0,sg];earcut(F0).forEach(([a,b,c])=>{const q=i=>[F0[i][0],F0[i][1],z];if(sg>0){vtx(q(a),up,0);vtx(q(b),up,0);vtx(q(c),up,0)}else{vtx(q(a),up,0);vtx(q(c),up,0);vtx(q(b),up,0)}})});
+/* the 7: square corners and chunky bars like the logo; raised a little from both faces, mirrored on the back so it reads the right way round */
+const G7=ccw([[-.25,.31],[.26,.31],[.26,.2],[-.01,-.33],[-.17,-.33],[.09,.19],[-.25,.19]]),E=.016,T7=earcut(G7),GN=vnorm(G7);
+[1,-1].forEach(sg=>{const mx=q=>sg>0?q[0]:-q[0],z0=sg*H,z1=sg*(H+E),up=[0,0,sg];
+  T7.forEach(([a,b,c])=>{const q=i=>[mx(G7[i]),G7[i][1],z1];vtx(q(a),up,5);vtx(q(b),up,5);vtx(q(c),up,5)});
+  for(let i=0;i<G7.length;i++){const j=(i+1)%G7.length,na=[sg>0?GN[i][0]:-GN[i][0],GN[i][1],0],nb=[sg>0?GN[j][0]:-GN[j][0],GN[j][1],0],
+    A0=[mx(G7[i]),G7[i][1],z0],B0=[mx(G7[j]),G7[j][1],z0],A1=[mx(G7[i]),G7[i][1],z1],B1=[mx(G7[j]),G7[j][1],z1];
+    vtx(A0,na,6);vtx(B0,nb,6);vtx(B1,nb,6);vtx(A0,na,6);vtx(B1,nb,6);vtx(A1,na,6)}});
 const NV=V.length/7;
-/* ink outline: a slightly bigger copy of the 7 drawn inside-out, so only a clean contour shows around the edges */
-const O=.017,outer=inset(poly,-O),OL=[];
+/* ink outline: a slightly bigger copy of the tile drawn inside-out, so only a clean contour shows around the edges */
+const O=.02,outer=inset(poly,-O),OL=[];
 const ot=(a,b,c)=>OL.push(...a,...b,...c);
 earcut(outer).forEach(([a,b,c])=>{const P=i=>[outer[i][0],outer[i][1],H+O*.9],Q=i=>[outer[i][0],outer[i][1],-H-O*.9];ot(P(a),P(b),P(c));ot(Q(a),Q(c),Q(b))});
 for(let i=0;i<outer.length;i++){const j=(i+1)%outer.length,a=outer[i],b=outer[j],z=H+O*.9;ot([a[0],a[1],-z],[b[0],b[1],-z],[b[0],b[1],z]);ot([a[0],a[1],-z],[b[0],b[1],z],[a[0],a[1],z])}
@@ -3895,6 +3898,9 @@ void main(){vec3 N=normalize(wn),Vd=normalize(cam-wp);vec3 L=normalize(vec3(-.45
  col=mix(col,mix(sky,mix(sky,vec3(1.),.14+.1*dark),step(.25,d)),side);
  /* the engraved groove reads as an inner ink line */
  col=mix(col,gnd,groove);
+ /* the raised 7 is printed in the logo's ink; its little walls catch a hint of the tile colour */
+ float g7=step(4.5,kk),w7=step(5.5,kk);
+ col=mix(col,mix(gnd,mix(gnd,C,.28),w7*step(.1,d)),g7);
  gl_FragColor=vec4(col,1.);}`);
 P3=prog(`attribute vec3 p;uniform mat4 M,VP;void main(){gl_Position=VP*(M*vec4(p,1.));}`,`precision mediump float;uniform vec3 C;void main(){gl_FragColor=vec4(C,1.);}`);
 P2=prog(`attribute vec4 s;attribute float r;uniform mat4 VP;uniform float t,dpr;varying float a,ring;
@@ -3957,7 +3963,7 @@ function frame(now){raf=0;const raw=(now-(last||now));const dt=Math.min(.05,raw/
   size();gl.viewport(0,0,W,Hh);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
   const asp=W/Hh,proj=persp(.62,asp,.1,10),camZ=2.25,view=trans(0,-.02,-camZ),VP=mul(proj,view);
   const bob=still?0:Math.sin(t*1.3)*.022,s=(.68+.32*ease)*(1+pop*.08*Math.sin(pop*9));
-  const M=mul(trans(0,bob+(1-ease)*-.25,0),mul(rotY(yaw+spin+(1-ease)*-2.4),mul(rotX(pitch),mul(rotZ(-.05),scl(s*1.12)))));
+  const M=mul(trans(0,bob+(1-ease)*-.25,0),mul(rotY(yaw+spin+(1-ease)*-2.4),mul(rotX(pitch),mul(rotZ(-.04),scl(s*1.02)))));
   box.style.setProperty("--h7s",(1-bob*3).toFixed(3));
   gl.enable(gl.DEPTH_TEST);gl.disable(gl.BLEND);
   gl.enable(gl.CULL_FACE);gl.cullFace(gl.FRONT);gl.useProgram(P3);gl.uniformMatrix4fv(u3.M,false,M);gl.uniformMatrix4fv(u3.VP,false,VP);gl.uniform3fv(u3.C,INK);
@@ -6793,5 +6799,17 @@ const st=document.getElementById("student-tools");if(st)st.hidden=true;
 .chip.dept:hover::after,.chip.dept:focus-visible::after{margin-inline-start:6px}
 </style>
 
+<style id="v19-hero-tile">
+/* the hero 7 is the logo tile in 3D; it no longer stands taller than the text next to it */
+.h7 .h7-css{inset:auto;left:50%;top:50%;width:62%;aspect-ratio:1/1;translate:-50% -50%;border-radius:24%;
+  background:var(--tape);color:var(--on-tape);border:3px solid var(--ink);box-shadow:9px 9px 0 var(--ink);
+  font:900 clamp(4rem,10vw,7.5rem)/1 "IBM Plex Sans",system-ui,sans-serif;text-shadow:none}
+@media(min-width:1000px){
+  .hero>.hero-side{grid-row:2/7!important;align-self:center!important}
+  .hero-side .h7{width:220px!important;margin:-6px auto 30px!important}
+}
+@media(max-width:999px){.hero-side .h7{width:min(56vw,230px)!important}}
+@media(min-width:721px) and (max-width:999px){.hero>.hero-side .h7{width:min(30vw,230px)!important;margin:0 0 30px!important}}
+</style>
 </body>
 </html>
