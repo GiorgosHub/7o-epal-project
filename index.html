@@ -6816,6 +6816,21 @@ const st=document.getElementById("student-tools");if(st)st.hidden=true;
 @media(max-width:999px){.hero-side .h7{width:min(56vw,230px)!important}}
 @media(min-width:721px) and (max-width:999px){.hero>.hero-side .h7{width:min(30vw,230px)!important;margin:0 0 30px!important}}
 </style>
+<style id="rules-fold-css">
+#kanonismos .r16-gone{display:none!important}
+#kanonismos .r16-all{display:flex;justify-content:flex-start;margin:14px 0 10px}
+#kanonismos .r16-sec{border:1.5px solid var(--line);border-radius:16px;margin:0 0 10px;padding:0 16px;background:var(--card)}
+#kanonismos .r16-sec>h3{margin:0}
+#kanonismos .r16-tg{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;padding:12px 0;font:inherit;font-weight:800;font-size:1rem;text-align:start;background:none;border:0;color:var(--ink);cursor:pointer}
+#kanonismos .r16-tg i{flex:none;width:12px;height:12px;border-inline-end:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:rotate(45deg) translate(-3px,-3px);transition:transform .25s}
+#kanonismos .r16-sec:not(.r16-closed) .r16-tg i,#kanonismos.r16-searching .r16-tg i{transform:rotate(225deg) translate(-3px,-3px)}
+#kanonismos .r16-sec:not(.r16-closed){padding-bottom:12px}
+#kanonismos .r16-sec.r16-closed>:not(h3):not(.er-say){display:none!important}
+#kanonismos.r16-searching .r16-sec.r16-closed>:not(h3):not(.er-say){display:revert!important}
+#kanonismos.r16-searching .r16-sec.r16-closed>[hidden]{display:none!important}
+#kanonismos .r16-tg:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:8px}
+@media(prefers-reduced-motion:reduce){#kanonismos .r16-tg i{transition:none}}
+</style>
 <script id="rules-section-js">
 (()=>{"use strict";
 /* The school rules have their own section, so nobody has to dig through School information to find them. */
@@ -6824,7 +6839,25 @@ const de=document.documentElement,lab=()=>{try{return A("l")[7]}catch(e){return"
 const sec=document.createElement("section");sec.className="wrap rv in";sec.id="kanonismos";sec.setAttribute("aria-labelledby","rules-h");
 sec.innerHTML='<h2 id="rules-h"></h2><div id="r16host"></div>';info.after(sec);
 const host=sec.querySelector("#r16host");
-function render(){const q=document.getElementById("r16q"),had=q&&document.activeElement===q;sec.querySelector("h2").textContent=lab();host.innerHTML=PANELS.kanonismos();
+const OPEN={el:["Άνοιξε όλα τα κεφάλαια","Κλείσε όλα τα κεφάλαια"],en:["Open all chapters","Close all chapters"],es:["Abrir todos los capítulos","Cerrar todos los capítulos"],he:["פתיחת כל הפרקים","סגירת כל הפרקים"],fa:["باز کردن همهٔ فصل‌ها","بستن همهٔ فصل‌ها"],sq:["Hap të gjithë kapitujt","Mbyll të gjithë kapitujt"],ru:["Открыть все главы","Свернуть все главы"],de:["Alle Kapitel öffnen","Alle Kapitel schließen"],fr:["Ouvrir tous les chapitres","Fermer tous les chapitres"],zh:["展开全部章节","收起全部章节"],hi:["सभी अध्याय खोलें","सभी अध्याय बंद करें"],ar:["افتح كل الفصول","أغلق كل الفصول"],bn:["সব অধ্যায় খুলুন","সব অধ্যায় বন্ধ করুন"],pt:["Abrir todos os capítulos","Fechar todos os capítulos"],id:["Buka semua bab","Tutup semua bab"]};
+const opened=new Set();
+const ow=()=>OPEN[(typeof lang==="string"&&lang)||de.lang]||OPEN.en;
+function fold(){const secs=[...host.querySelectorAll(".r16-sec")];if(!secs.length)return;
+  const toc=host.querySelector("#r16toc");if(toc)toc.classList.add("r16-gone");
+  let bar=host.querySelector(".r16-all");if(!bar){bar=document.createElement("div");bar.className="r16-all";bar.innerHTML='<button type="button" class="chip r16-allb"></button>';(host.querySelector("#r16body")||secs[0]).before(bar)}
+  secs.forEach(s=>{const h3=s.querySelector(":scope>h3");if(!h3)return;if(!h3.querySelector(".r16-tg")){const t=h3.textContent;h3.textContent="";const b=document.createElement("button");b.type="button";b.className="r16-tg";b.innerHTML='<span></span><i aria-hidden="true"></i>';b.firstChild.textContent=t;h3.append(b)}
+    const o=opened.has(s.id);s.classList.toggle("r16-closed",!o);h3.querySelector(".r16-tg").setAttribute("aria-expanded",String(o))});
+  const all=secs.every(s=>opened.has(s.id));const ab=bar.querySelector("button");ab.textContent=all?ow()[1]:ow()[0];ab.dataset.all=all?"1":"0"}
+function openSec(s,v){if(!s)return;if(v)opened.add(s.id);else opened.delete(s.id);fold()}
+host.addEventListener("click",e=>{const t=e.target.closest(".r16-tg");if(t){const s=t.closest(".r16-sec");openSec(s,!opened.has(s.id));return}
+  const ab=e.target.closest(".r16-allb");if(ab){const secs=[...host.querySelectorAll(".r16-sec")];if(ab.dataset.all==="1")opened.clear();else secs.forEach(s=>opened.add(s.id));fold()}});
+/* quick facts and chapter links open their chapter before jumping to it */
+document.addEventListener("click",e=>{const g=e.target.closest("[data-r16go],[data-r16sec]");if(!g)return;
+  const el=document.getElementById(g.dataset.r16go!=null?"r16-"+g.dataset.r16go:"r16s-"+g.dataset.r16sec);const s=el&&el.closest(".r16-sec");if(s&&!opened.has(s.id))openSec(s,true)},true);
+/* while searching, every chapter with a match is shown open */
+document.addEventListener("input",e=>{if(e.target&&e.target.id==="r16q")sec.classList.toggle("r16-searching",!!e.target.value.trim())});
+function render(){const q=document.getElementById("r16q"),had=q&&document.activeElement===q;sec.querySelector("h2").textContent=lab();host.innerHTML=PANELS.kanonismos();fold();
+  sec.classList.toggle("r16-searching",!!(typeof r16Q==="string"&&r16Q.trim()));
   if(had){const n=document.getElementById("r16q");n&&n.focus()}}
 /* the old tab inside School information now leads here */
 const stripTab=()=>{const b=document.querySelector('#tabs [data-k="kanonismos"]');if(b)b.remove()};
