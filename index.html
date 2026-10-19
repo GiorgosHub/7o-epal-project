@@ -1268,7 +1268,7 @@ $("#mine").addEventListener("click",e=>{const x=e.target.closest("[data-rm]");if
 /* ---------- Ανακοινώσεις και σύνδεσμοι (όλα ανοίγουν μέσα στο site) ---------- */
 let newsItems=[["2026-09-25","Νέο πρόγραμμα από 28-09-2026"],["2026-09-23","Ευχαριστήρια επιστολή προς «Μπαρός Ακτινοδιαγνωστική»"],["2026-09-19","Κατάθεση δικαιολογητικών για την ΙΑ Φάση Μεταλυκειακού Έτους – Τάξη Μαθητείας"],["2026-09-18","Νέο πρόγραμμα από 21-09-2026"],["2026-09-16","Επίσκεψη Πολωνών εκπαιδευτικών στο 7ο ΕΠΑΛ Λάρισας στο πλαίσιο ευρωπαϊκού προγράμματος"],["2026-09-09","Αγιασμός 7ου ΕΠΑΛ, Παρασκευή 11-09-2026"],["2026-09-04","Πρόγραμμα Επαναληπτικών Εξετάσεων Σεπτεμβρίου 2026"],["2026-09-02","«Στολίδι» για τη Λάρισα το 7ο ΕΠΑΛ: ολοκληρώνεται η ριζική ανακαίνιση μέσω του προγράμματος «Μαριέττα Γιαννάκου»"]].map(([d,ti])=>({d,ti}));
 const newsHTML=a=>a.map((x,i)=>`<li data-news-index="${i}"><time>${fmtL(x.d)}</time><div><button class="news-toggle" type="button" aria-expanded="false" data-news-index="${i}">${esc(tt(x.ti))}</button><div class="news-body" id="news-body-${i}" hidden aria-live="polite"></div></div></li>`).join("");
-const LINKS=["#news","#info/mathiteia","#info/panelladikes","#info/tomeis","#info/wrario","#info/teachers2","#info/xrisima","#info/kanonismos","#info/vivliothiki","#info/eggrafes","#info/drastiriotites","#info/vraveuseis","#info/ergasia"];
+const LINKS=["#news","#info/mathiteia","#info/panelladikes","#info/tomeis","#info/wrario","#info/teachers2","#info/xrisima","#kanonismos","#info/vivliothiki","#info/eggrafes","#info/drastiriotites","#info/vraveuseis","#info/ergasia"];
 const addr16=()=>lang==="el"?"Δρόση και Παιωνίου, 41335 Λάρισα":(lang==="ru"?"Дроси и Пэониу":"Drosi & Paioniou")+", 41335 "+tt("Λάρισα");
 const renderCtc=()=>{const c=document.getElementById("ctc");if(c)c.innerHTML=`<span>${esc(tt("Τηλέφωνο"))}: <a href="tel:+302410670290">2410 670290</a></span><span>${esc(tt("Email σχολείου"))}: <a href="mailto:mail@7epal-laris.lar.sch.gr">mail@7epal-laris.lar.sch.gr</a></span><span>${esc(tt("Ταχυδρομική διεύθυνση"))}: ${esc(addr16())}</span>`};
 const renderLinks=()=>(renderCtc(),$("#links").innerHTML=LINKS.map((u,i)=>`<a class="chip" href="${u}">${A("l")[i]}</a>`).join("")+`<a class="chip" href="https://7epal-laris.lar.sch.gr/request" target="_blank" rel="noopener">${t("req")}</a>`);
@@ -1646,7 +1646,7 @@ Latest news: ${newsItems.slice(0,8).map(x=>String(x.d).slice(0,10)+" "+x.ti).joi
 Apprenticeship: ${f(MATH)}. Panhellenic exams: ${f(PAN)}. Useful: ${f(XR)}.
 School phone: 2410 670290. Address: Δρόση και Παιωνίου, 41335 Λάρισα (Nea Politeia). School code 3150135. Other email: mail@7epal-laris.lar.sch.gr.
 Management: Director ${DIR16[0][2]}; deputy heads ${DIR16[1][2]} and ${DIR16[2][2]}.
-School rules: the official "${KAN[1]}" is on this site as searchable text in 15 languages, in the "School rules" tab of School information (#info/kanonismos). The rules do NOT state a maximum number of absences: never invent a number, tell the student to ask the form teacher or the school office. Quote only what the lines below say.
+School rules: the official "${KAN[1]}" is on this site as searchable text in 15 languages, in its own "School rules" section (#kanonismos). The rules do NOT state a maximum number of absences: never invent a number, tell the student to ask the form teacher or the school office. Quote only what the lines below say.
 Rule lines that match this question (official Greek text | English):
 ${r16For(q)||"(no rule line matched this question)"}
 Library: rules 2026-2027 and opening hours from 12-10-2026, tab #info/vivliothiki. Enrolment documents and declarations: ${[...EGG,...YD].map(x=>x[1]).join("; ")} (tab #info/eggrafes). Digital Tutoring for Panhellenic exams: ${PSF.map(x=>x[1]).join("; ")}.
@@ -6081,7 +6081,7 @@ student:()=>{return`<div class="r7-grid">
   <div class="r7-actions"><button type="button" class="pri" data-jump="#pbworks-submit">${esc(tr("Παράδοση εργασίας"))}</button><button type="button" data-jump="#digital">${esc(tr("Ψηφιακές τάξεις"))}</button></div></article>
  <article class="r7-card"><h3>🎓 ${esc(tr("Διάβασμα"))}</h3><p>${esc(tr("Λύσε ασκήσεις βήμα-βήμα με τον βοηθό AI, οργάνωσε το διάβασμα με χρονόμετρο και κάρτες μελέτης."))}</p>
   <div class="r7-actions"><button type="button" class="pri" data-act="tutor">${esc(tr("Λύση ασκήσεων"))}</button><button type="button" data-jump="#student-lab">${esc(tr("Εργαστήριο μαθητή"))}</button></div></article></div>`+
- faq([["Πού βρίσκω τον κανονισμό του σχολείου;",esc(tr("Άνοιξε την καρτέλα «Εσωτερικός κανονισμός» στις"))+" "+link("#info/kanonismos","Πληροφορίες σχολείου")+"."],["Πού βρίσκω το πρόγραμμα του τμήματός μου;",esc(tr("Διάλεξε το τμήμα σου εδώ ή στην ενότητα"))+" "+link("#programma","Πρόγραμμα")+". "+esc(tr("Η σελίδα το θυμάται για την επόμενη φορά."))],
+ faq([["Πού βρίσκω τον κανονισμό του σχολείου;",esc(tr("Στην ενότητα"))+" "+link("#kanonismos","Εσωτερικός κανονισμός")+"."],["Πού βρίσκω το πρόγραμμα του τμήματός μου;",esc(tr("Διάλεξε το τμήμα σου εδώ ή στην ενότητα"))+" "+link("#programma","Πρόγραμμα")+". "+esc(tr("Η σελίδα το θυμάται για την επόμενη φορά."))],
   ["Πώς ανοίγω την ψηφιακή τάξη;",esc(tr("Στις"))+" "+link("#digital","Ψηφιακές τάξεις")+" "+esc(tr("αναζήτησε τον/την εκπαιδευτικό σου και άνοιξε τον επίσημο σύνδεσμο Webex."))],
   ["Πώς παραδίδω μια εργασία;",esc(tr("Από την ενότητα"))+" "+link("#pbworks-submit","Παράδοση εργασίας")+" "+esc(tr("ανοίγεις τον επίσημο χώρο PBworks του μαθήματος."))]])},
 parent:()=>{const n=news(),h=nextHoliday();return`<div class="r7-grid">
@@ -6093,7 +6093,7 @@ parent:()=>{const n=news(),h=nextHoliday();return`<div class="r7-grid">
   ["Τι είναι η Μαθητεία;",esc(tr("Δείτε την καρτέλα «Μαθητεία» στις"))+" "+link("#info/mathiteia","Πληροφορίες σχολείου")+"."],
   ["Πού βρίσκω πληροφορίες για τις Πανελλαδικές;",esc(tr("Δείτε την καρτέλα «Πανελλαδικές» στις"))+" "+link("#info/panelladikes","Πληροφορίες σχολείου")+"."],
   ["Πού βρίσκω τα έντυπα για τις εγγραφές;",esc(tr("Όλα είναι στην καρτέλα «Εγγραφές & έντυπα» στις"))+" "+link("#info/eggrafes","Πληροφορίες σχολείου")+"."],
-  ["Πού βρίσκω τον κανονισμό του σχολείου;",esc(tr("Άνοιξε την καρτέλα «Εσωτερικός κανονισμός» στις"))+" "+link("#info/kanonismos","Πληροφορίες σχολείου")+"."]])},
+  ["Πού βρίσκω τον κανονισμό του σχολείου;",esc(tr("Στην ενότητα"))+" "+link("#kanonismos","Εσωτερικός κανονισμός")+"."]])},
 visitor:()=>{const s=sectors();return`<div class="r7-grid">
  <article class="r7-card"><h3>🏫 ${esc(tr("Γνώρισε το σχολείο"))}</h3><p><span class="r7-big">${s.n}</span> ${esc(tr("τομείς"))} · <span class="r7-big">${s.s}</span> ${esc(tr("ειδικότητες"))}</p><p>${esc(tr("Δες τι σπουδάζουν οι μαθητές, περιηγήσου στο σχολείο σε 3D και διάβασε για τις διακρίσεις του."))}</p>
   <div class="r7-actions"><button type="button" class="pri" data-jump="#sectors">${esc(tr("Τομείς"))}</button><button type="button" data-jump="#campus">${esc(tr("Το σχολείο σε 3D"))}</button><button type="button" data-jump="#v12-showcase">${esc(tr("Διακρίσεις"))}</button></div></article>
@@ -6816,6 +6816,34 @@ const st=document.getElementById("student-tools");if(st)st.hidden=true;
 @media(max-width:999px){.hero-side .h7{width:min(56vw,230px)!important}}
 @media(min-width:721px) and (max-width:999px){.hero>.hero-side .h7{width:min(30vw,230px)!important;margin:0 0 30px!important}}
 </style>
+<script id="rules-section-js">
+(()=>{"use strict";
+/* The school rules have their own section, so nobody has to dig through School information to find them. */
+const info=document.getElementById("info");if(!info||typeof PANELS==="undefined"||!PANELS.kanonismos)return;
+const de=document.documentElement,lab=()=>{try{return A("l")[7]}catch(e){return"Εσωτερικός κανονισμός"}};
+const sec=document.createElement("section");sec.className="wrap rv in";sec.id="kanonismos";sec.setAttribute("aria-labelledby","rules-h");
+sec.innerHTML='<h2 id="rules-h"></h2><div id="r16host"></div>';info.after(sec);
+const host=sec.querySelector("#r16host");
+function render(){const q=document.getElementById("r16q"),had=q&&document.activeElement===q;sec.querySelector("h2").textContent=lab();host.innerHTML=PANELS.kanonismos();
+  if(had){const n=document.getElementById("r16q");n&&n.focus()}}
+/* the old tab inside School information now leads here */
+const stripTab=()=>{const b=document.querySelector('#tabs [data-k="kanonismos"]');if(b)b.remove()};
+const tabs=document.getElementById("tabs");if(tabs){new MutationObserver(stripTab).observe(tabs,{childList:true});stripTab()}
+const go=(smooth)=>{sec.scrollIntoView({behavior:smooth?"smooth":"instant",block:"start"});if(location.hash!=="#kanonismos")history.replaceState(null,"","#kanonismos")};
+if(typeof goInfo==="function"){const g=goInfo;goInfo=function(k){if(k==="kanonismos"){go(true);return}return g.apply(this,arguments)}}
+if(typeof cur!=="undefined"&&cur==="kanonismos"&&typeof showTab==="function")showTab("mathiteia");
+const fix=()=>{if(/^#info\/kanonismos$/.test(location.hash)){if(typeof showTab==="function")showTab("mathiteia");requestAnimationFrame(()=>requestAnimationFrame(()=>go(false)))}};
+addEventListener("hashchange",fix);fix();
+/* in the header menus */
+const add=(nav,cls)=>{if(!nav||nav.querySelector('a[href="#kanonismos"]'))return;const a=document.createElement("a");a.href="#kanonismos";if(cls)a.className=cls;a.dataset.rules="1";
+  const after=nav.querySelector('a[href="#info"]');after?after.after(a):nav.append(a)};
+add(document.querySelector("header nav:not(#v15-more-menu)"));add(document.getElementById("v15-more-menu"));
+const SHORT={el:"Κανονισμός",en:"School rules",es:"Reglamento",he:"תקנון",fa:"آیین‌نامه",sq:"Rregullorja",ru:"Правила",de:"Schulordnung",fr:"Règlement",zh:"校规",hi:"नियम",ar:"اللائحة",bn:"নিয়মাবলি",pt:"Regimento",id:"Tata tertib"};
+const labels=()=>{const l=(typeof lang==="string"&&lang)||de.lang;document.querySelectorAll('a[data-rules]').forEach(a=>{a.textContent=SHORT[l]||lab();a.setAttribute("data-notr","")});window.dispatchEvent(new Event("resize"))};
+render();labels();try{if(typeof spy!=="undefined")spy.observe(sec)}catch(e){}
+new MutationObserver(()=>{render();labels()}).observe(de,{attributes:true,attributeFilter:["lang"]});
+})();
+</script>
 <style id="live7-css">
 /* Live school: rooms light up on the 3D model when a lesson is on; the panel lists every room and finds teachers */
 #campus .lv7-layer{position:absolute;inset:0;z-index:3;pointer-events:none;visibility:hidden}
