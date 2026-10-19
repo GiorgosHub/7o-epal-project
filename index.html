@@ -7130,7 +7130,7 @@ function stop(){queue=[];if(synth)synth.cancel();if(cur)cur.classList.remove("ta
 function speak(text,btn){if(!synth){note(t("noSpeech"));return}if(!voiceOk()){note(t("noVoice"));return}
   stop();queue=chunks(text);cur=btn||null;if(btn){btn.classList.add("talk");btn.textContent=t("stop")}
   const next=()=>{if(!queue.length){stop();return}const u=new SpeechSynthesisUtterance(queue.shift());u.lang=window.__loc?__loc():"el-GR";u.rate=.92;u.onend=next;u.onerror=next;synth.speak(u)};next()}
-function textOf(el){const c=el.cloneNode(true);c.querySelectorAll("button,script,style,svg,canvas,select,input,textarea,datalist,[aria-hidden=true],[hidden],.er-say,.c3-stage,.lv7-board").forEach(x=>x.remove());
+function textOf(el){const c=el.cloneNode(true);c.querySelectorAll("button:not(.r16-tg),script,style,svg,canvas,select,input,textarea,datalist,[aria-hidden=true],[hidden],.er-say,.c3-stage,.lv7-board").forEach(x=>x.remove());
   c.querySelectorAll("td,th,dt,dd").forEach(x=>x.append(", "));c.querySelectorAll("br,p,li,h1,h2,h3,h4,tr,div").forEach(x=>x.append(" . "));return(c.textContent||"").replace(/(\s*\.\s*){2,}/g,". ").replace(/\s+/g," ").trim()}
 /* ---------- buttons next to each heading ---------- */
 function tag(){if(!on)return;document.querySelectorAll("section.wrap>h2,section.wrap .feature-head h2,.r16-sec>h3").forEach(h=>{if(h.nextElementSibling&&h.nextElementSibling.classList.contains("er-say"))return;if(h.closest("[hidden]"))return;
