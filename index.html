@@ -7192,5 +7192,36 @@ b.addEventListener("click",()=>{sw.click();sync()});
 new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:["data-colour"]});sync();
 })();
 </script>
+<script id="app-icon-js">
+(()=>{"use strict";
+/* The app icon, the tab icon and the browser bar follow the theme colour you pick (⚙ Settings → colour).
+   Phones keep the icon they got when the app was added, so pick the colour first, then add the app. */
+const de=document.documentElement,head=document.head;
+const G7=[[-.25,.31],[.26,.31],[.26,.2],[-.01,-.33],[-.17,-.33],[.09,.19],[-.25,.19]];
+const css=v=>{const s=getComputedStyle(de).getPropertyValue(v).trim(),m=s.match(/^rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)/);return m?"#"+[m[1],m[2],m[3]].map(n=>(+n).toString(16).padStart(2,"0")).join(""):s};
+function draw(S,{round=0,k=1.12}={}){const c=document.createElement("canvas");c.width=c.height=S;const x=c.getContext("2d"),bg=css("--tape")||"#f5c400",fg=css("--on-tape")||"#14202b";
+  x.fillStyle=bg;if(round){const r=S*round;x.beginPath();x.moveTo(r,0);x.arcTo(S,0,S,S,r);x.arcTo(S,S,0,S,r);x.arcTo(0,S,0,0,r);x.arcTo(0,0,S,0,r);x.closePath();x.fill()}else x.fillRect(0,0,S,S);
+  const P=(dx,dy)=>{x.beginPath();G7.forEach(([a,b],i)=>{const X=S*(.5+a*k)+dx,Y=S*(.5-b*k)+dy;i?x.lineTo(X,Y):x.moveTo(X,Y)});x.closePath()};
+  x.fillStyle="rgba(0,0,0,.2)";P(S*.022,S*.022);x.fill();x.fillStyle=fg;P(0,0);x.fill();return c.toDataURL("image/png")}
+let base=null,blobUrl="",last="";
+const link=(rel)=>{let l=head.querySelector(`link[rel="${rel}"]`);if(!l){l=document.createElement("link");l.rel=rel;head.append(l)}return l};
+async function update(){const key=(de.dataset.colour||"yellow")+"|"+css("--tape")+"|"+css("--on-tape");if(key===last)return;last=key;
+  const accent=css("--tape")||"#f5c400";
+  const tc=head.querySelector('meta[name="theme-color"]');if(tc)tc.content=accent;
+  link("icon").href=draw(64,{round:.22,k:1.15});
+  link("apple-touch-icon").href=draw(180,{k:1.1});
+  const ml=[...head.querySelectorAll('link[rel="manifest"]')];ml.slice(1).forEach(l=>l.remove());const m=ml[0];if(!m)return;
+  if(!base){base=m.getAttribute("href");}
+  if((de.dataset.colour||"yellow")==="yellow"&&base&&!base.startsWith("blob:")){m.href=base;return}   /* the default yellow keeps the site's own manifest file */
+  let man={};try{man=await (await fetch(base,{cache:"force-cache"})).json()}catch(e){man={name:"PROJECT 7ο · 7ο ΕΠΑΛ Λάρισας",short_name:"PROJECT 7ο",display:"standalone",background_color:"#f4efe3"}}
+  const abs=u=>new URL(u||"/",location.href).href;
+  man.start_url=abs(man.start_url||"/");man.scope=abs(man.scope||"/");man.theme_color=accent;
+  man.icons=[{src:draw(192),sizes:"192x192",type:"image/png",purpose:"any"},{src:draw(512),sizes:"512x512",type:"image/png",purpose:"any"},{src:draw(512,{k:.92}),sizes:"512x512",type:"image/png",purpose:"maskable"}];
+  if(blobUrl)URL.revokeObjectURL(blobUrl);blobUrl=URL.createObjectURL(new Blob([JSON.stringify(man)],{type:"application/manifest+json"}));m.href=blobUrl}
+let t=0;const soon=()=>{clearTimeout(t);t=setTimeout(update,120)};
+new MutationObserver(soon).observe(de,{attributes:true,attributeFilter:["data-colour","style","data-theme"]});
+update();
+})();
+</script>
 </body>
 </html>
