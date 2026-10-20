@@ -803,6 +803,7 @@ linear-gradient(180deg,#191613 0%,#13110f 55%,#0d0c0a 100%)}
         <button type="button" role="menuitem" aria-label="Pink" data-colour="pink" style="--c:#ec4899"></button>
         <button type="button" role="menuitem" aria-label="Cyan" data-colour="cyan" style="--c:#0891b2"></button>
         <button type="button" role="menuitem" aria-label="Orange" data-colour="orange" style="--c:#ea580c"></button>
+        <button type="button" role="menuitem" aria-label="ΑΕΛ" title="ΑΕΛ · βυσσινί και λευκό" data-colour="ael" style="--c:#9b1b30"></button>
       </div>
     </div>
     <a class="brand" href="#top" data-i="b"></a>
@@ -1591,11 +1592,12 @@ const COLOURS={
   red:{accent:"#dc2626",on:"#fff",blue:"#b91c1c"},
   pink:{accent:"#ec4899",on:"#fff",blue:"#db2777"},
   cyan:{accent:"#0891b2",on:"#fff",blue:"#0e7490"},
-  orange:{accent:"#ea580c",on:"#fff",blue:"#c2410c"}
+  orange:{accent:"#ea580c",on:"#fff",blue:"#c2410c"},
+  ael:{accent:"#9b1b30",on:"#fff",blue:"#7a1426",fg:"#ef6b7d"}   /* ΑΕΛ: crimson (βυσσινί) and white */
 };
 let colour="yellow";try{colour=localStorage.getItem("colour")||"yellow"}catch{}
 if(!COLOURS[colour])colour="yellow";
-const applyColour=()=>{const c=COLOURS[colour],r=document.documentElement;r.style.setProperty("--tape",c.accent);r.style.setProperty("--on-tape",c.on);r.style.setProperty("--now-fg",c.accent);r.style.setProperty("--blue",c.blue);document.querySelectorAll("#cm button[data-colour]").forEach(b=>b.setAttribute("aria-current",b.dataset.colour===colour?"true":"false"))};
+const applyColour=()=>{const c=COLOURS[colour],r=document.documentElement;r.style.setProperty("--tape",c.accent);r.style.setProperty("--on-tape",c.on);r.style.setProperty("--now-fg",c.fg||c.accent);r.dataset.colour=colour;r.style.setProperty("--blue",c.blue);document.querySelectorAll("#cm button[data-colour]").forEach(b=>b.setAttribute("aria-current",b.dataset.colour===colour?"true":"false"))};
 const closeColours=()=>{$("#cm").classList.remove("o");$("#cb").setAttribute("aria-expanded","false")};
 $("#cb").onclick=e=>{e.stopPropagation();const o=$("#cm").classList.toggle("o");$("#cb").setAttribute("aria-expanded",o)};
 $("#cm").onclick=e=>{const b=e.target.closest("[data-colour]");if(!b)return;colour=b.dataset.colour;try{localStorage.setItem("colour",colour)}catch{}applyColour();closeColours()};
@@ -7154,6 +7156,29 @@ de.classList.toggle("er",on);
 let pend=0;const mo=new MutationObserver(()=>{if(pend)return;pend=requestAnimationFrame(()=>{pend=0;if(!document.getElementById("er-on"))addSwitch();if(on)tag()})});mo.observe(document.body,{childList:true,subtree:true});
 new MutationObserver(()=>{stop();label()}).observe(de,{attributes:true,attributeFilter:["lang"]});
 addSwitch();tag();label();addEventListener("pagehide",stop);
+})();
+</script>
+<style id="ael-theme-css">
+/* ΑΕΛ theme: the club's crimson and white — a half-and-half swatch, and the white stripes of the shirt along the top of the header */
+.colour-menu button[data-colour="ael"]{display:none!important}
+.ael-pick{display:inline-flex;align-items:center;gap:10px;margin-top:12px;min-height:44px;padding:6px 16px 6px 8px;border-radius:99px;font:inherit;font-weight:800;font-size:.95rem;cursor:pointer;
+  color:#fff;background:#9b1b30;border:2px solid #9b1b30;box-shadow:3px 3px 0 var(--ink)}
+.ael-pick i{width:30px;height:30px;border-radius:50%;flex:none;border:2px solid #fff;background:repeating-linear-gradient(90deg,#9b1b30 0 5px,#fff 5px 9px)}
+.ael-pick[aria-pressed="true"]{outline:3px solid var(--ink);outline-offset:3px}
+.ael-pick:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+html[data-colour="ael"] body>header{background-image:repeating-linear-gradient(90deg,transparent 0 22px,rgba(155,27,48,.07) 22px 30px)}
+html[data-colour="ael"] body>header::after{content:"";position:absolute;left:18px;right:18px;bottom:-1px;height:3px;border-radius:3px;pointer-events:none;
+  background:repeating-linear-gradient(90deg,#9b1b30 0 14px,#fff 14px 22px)}
+</style>
+<script id="ael-theme-js">
+(()=>{"use strict";
+/* ΑΕΛ, the Larissa football club: a team theme in its crimson (βυσσινί) and white, under ⚙ Settings → colours */
+const host=document.getElementById("v11-colours"),sw=document.querySelector('#cm [data-colour="ael"]');if(!host||!sw)return;
+const b=document.createElement("button");b.type="button";b.className="ael-pick";b.setAttribute("data-notr","");b.innerHTML='<i aria-hidden="true"></i><span>ΑΕΛ</span>';
+b.title="ΑΕΛ · βυσσινί και λευκό";host.append(b);
+const sync=()=>b.setAttribute("aria-pressed",String(document.documentElement.dataset.colour==="ael"));
+b.addEventListener("click",()=>{sw.click();sync()});
+new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:["data-colour"]});sync();
 })();
 </script>
 </body>
