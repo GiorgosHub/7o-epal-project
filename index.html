@@ -6496,6 +6496,18 @@ new MutationObserver(rs=>rs.forEach(r=>r.addedNodes.forEach(x=>{if(x.nodeType===
 .sf7-rc{font:inherit;font-weight:700;font-size:.92rem;min-height:38px;padding:6px 15px;border-radius:99px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:transform .2s var(--e),border-color .2s,background .2s}
 .sf7-rc:hover{transform:translateY(-2px);border-color:var(--ink)}
 .sf7-rc.on{background:var(--tape);color:var(--on-tape);border-color:var(--ink)}
+.sf7-ri{display:inline-flex;align-items:center;border-radius:99px;transition:transform .2s var(--e)}
+.sf7-ri:hover{transform:translateY(-2px)}
+.sf7-ri .sf7-rc{border-start-end-radius:0;border-end-end-radius:0;padding-inline-end:10px}
+.sf7-ri .sf7-rc:hover{transform:none}
+.sf7-rx{font:inherit;font-size:1.05rem;line-height:1;min-width:38px;min-height:38px;padding:0 10px 0 8px;border-radius:0 99px 99px 0;border:1.5px solid var(--line);border-inline-start:0;background:var(--card);color:var(--steel,var(--ink));cursor:pointer}
+[dir=rtl] .sf7-ri .sf7-rc{border-radius:0 99px 99px 0}
+[dir=rtl] .sf7-rx{border-radius:99px 0 0 99px;padding:0 8px 0 10px}
+.sf7-rx:hover{color:#b42318;border-color:var(--ink)}
+.sf7-ri.on .sf7-rx{background:var(--tape);color:var(--on-tape);border-color:var(--ink)}
+.sf7-rx:focus-visible,.sf7-rclr:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.sf7-rclr{font:inherit;font-size:.86rem;font-weight:600;min-height:38px;padding:0 10px;border:0;background:transparent;color:var(--steel,var(--ink));text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.sf7-rclr:hover{color:var(--ink)}
 .sf7 :focus-visible,.sv7 :focus-visible,.b7h :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 
 /* ---------- viewer head: the 3D class badge ---------- */
@@ -6728,9 +6740,16 @@ gbar.addEventListener("mousedown",e=>e.preventDefault());
 gbar.addEventListener("click",e=>{const b=e.target.closest("[data-g]");if(!b)return;grade=b.dataset.g;act=-1;draw();q.focus()});
 xb.addEventListener("click",()=>{q.value="";act=-1;draw();q.focus()});
 document.addEventListener("pointerdown",e=>{if(isOpen()&&!box.contains(e.target))close()});
+const RT={"rm": ["Αφαίρεση του {c} από τα πρόσφατα", "Remove {c} from recent", "Quitar {c} de recientes", "הסרת {c} מהאחרונים", "حذف {c} از اخیر", "Hiq {c} nga të fundit", "Убрать {c} из недавних", "{c} aus „Zuletzt“ entfernen", "Retirer {c} des récents", "从最近中移除 {c}", "{c} को हाल के से हटाएँ", "إزالة {c} من الأخيرة", "সাম্প্রতিক থেকে {c} সরান", "Remover {c} dos recentes", "Hapus {c} dari terbaru"], "clr": ["Καθαρισμός", "Clear", "Borrar", "ניקוי", "پاک کردن", "Pastro", "Очистить", "Leeren", "Effacer", "清除", "साफ़ करें", "مسح", "মুছুন", "Limpar", "Hapus semua"], "clrL": ["Καθαρισμός όλων των πρόσφατων τμημάτων", "Clear all recent classes", "Borrar todos los grupos recientes", "ניקוי כל הכיתות האחרונות", "پاک کردن همهٔ کلاس‌های اخیر", "Pastro të gjitha klasat e fundit", "Очистить все недавние классы", "Alle zuletzt angesehenen Klassen entfernen", "Effacer toutes les classes récentes", "清除所有最近查看的班级", "हाल की सभी कक्षाएँ साफ़ करें", "مسح كل الصفوف الأخيرة", "সব সাম্প্রতিক ক্লাস মুছুন", "Limpar todas as turmas recentes", "Hapus semua kelas terbaru"]},RL=["el","en","es","he","fa","sq","ru","de","fr","zh","hi","ar","bn","pt","id"];
+const rt=(k,c)=>{const i=RL.indexOf(typeof lang==="string"?lang:"el");return((RT[k]||[])[i<0?1:i]||RT[k][1]).replace("{c}",c||"")};
+/* recent classes: tap to open, × removes one, "Clear" removes them all */
 const drawRec=()=>{const l=(typeof pinnedCls!=="undefined"?pinnedCls:[]).slice().reverse().map(n=>CLASSES.find(c=>c.n===n)).filter(Boolean).slice(0,6);
-  rec.innerHTML=l.length?`<span>${esc(s("rec"))}</span>`+l.map(c=>`<button type="button" class="sf7-rc${c.n===mine?" on":""}" data-c="${esc(c.n)}" aria-pressed="${c.n===mine}">${esc(c.n)}</button>`).join(""):""};
-rec.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(b&&typeof openClassInPage==="function")openClassInPage(b.dataset.c)});
+  rec.innerHTML=l.length?`<span>${esc(s("rec"))}</span>`+l.map(c=>`<span class="sf7-ri${c.n===mine?" on":""}"><button type="button" class="sf7-rc${c.n===mine?" on":""}" data-c="${esc(c.n)}" aria-pressed="${c.n===mine}">${esc(c.n)}</button><button type="button" class="sf7-rx" data-rm="${esc(c.n)}" aria-label="${esc(rt("rm",c.n))}" title="${esc(rt("rm",c.n))}">×</button></span>`).join("")+(l.length>1?`<button type="button" class="sf7-rclr" aria-label="${esc(rt("clrL"))}">${esc(rt("clr"))}</button>`:""):""};
+const forget=n=>{if(typeof removeClass==="function")removeClass(n);else{pinnedCls=pinnedCls.filter(x=>x!==n);try{localStorage.setItem("pinnedCls",JSON.stringify(pinnedCls))}catch(e){}}};
+rec.addEventListener("click",e=>{const x=e.target.closest("[data-rm]");
+  if(x){const n=x.dataset.rm,i=[...rec.querySelectorAll("[data-rm]")].indexOf(x);forget(n);drawRec();const r=rec.querySelectorAll("[data-rm]");(r[Math.min(i,r.length-1)]||q).focus();return}
+  if(e.target.closest(".sf7-rclr")){[...pinnedCls].forEach(forget);drawRec();q.focus();return}
+  const b=e.target.closest("[data-c]");if(b&&typeof openClassInPage==="function")openClassInPage(b.dataset.c)});
 
 /* ---------- the viewer ---------- */
 const head=document.createElement("div");head.className="b7h";head.setAttribute("data-notr","");
@@ -6843,7 +6862,7 @@ const st=document.getElementById("student-tools");if(st)st.hidden=true;
 <!-- Touch polish for phones and tablets: finger-sized targets (≈44 px), no tiny labels, no clipped chips. -->
 <style id="mobile-css">
 @media (pointer:coarse){
-  .chip,.v12-btn,.sf7-rc,.sf7-g,.pbworks-eye,.vt .chip,#viewer .chip,.r7-actions>*,.hol-badge+button,.v13-intro [data-profile]{min-height:44px!important}
+  .chip,.v12-btn,.sf7-rc,.sf7-rx,.sf7-rclr,.sf7-g,.pbworks-eye,.vt .chip,#viewer .chip,.r7-actions>*,.hol-badge+button,.v13-intro [data-profile]{min-height:44px!important}
   .chip,.v12-btn,.vt .chip,#viewer .chip{display:inline-flex;align-items:center;justify-content:center}
   .dt7 button{min-height:46px}
   .ib{min-width:44px;min-height:44px}
@@ -7504,6 +7523,54 @@ function relabel(){if(presBtn)presBtn.textContent=t("presBtn");if(!pres.hidden)l
 new MutationObserver(relabel).observe(de,{attributes:true,attributeFilter:["lang"]});
 const mo=new MutationObserver(()=>{addPresBtn();if(placeAbs()&&presBtn&&document.contains(presBtn)){}});mo.observe(document.body,{childList:true,subtree:true});
 addPresBtn();placeAbs();drawNx();
+})();
+</script>
+<style id="reset7-css">
+.r7f{border-top:1px solid var(--line);padding:11px 0 2px}
+.r7f h3{font-size:.86rem;margin:0 0 6px;color:var(--steel)}
+.r7f p{margin:0 0 10px;font-size:.82rem;line-height:1.45;color:var(--steel)}
+.r7f button{font:inherit;font-size:.86rem;font-weight:700;min-height:44px;padding:8px 14px;border-radius:99px;border:1.5px solid #b42318;background:var(--card);color:#b42318;cursor:pointer}
+.r7f button:hover{background:#b42318;color:#fff}
+.r7f button.r7f-no{border-color:var(--line);color:var(--ink);font-weight:600}
+.r7f button.r7f-no:hover{background:var(--card);border-color:var(--ink);color:var(--ink)}
+.r7f button.r7f-yes{background:#b42318;color:#fff}
+.r7f button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.r7f-ask{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.r7f-ask strong{flex:1 1 100%;font-size:.88rem}
+html[data-theme=dark] .r7f button{border-color:#ff8a80;color:#ff8a80}
+html[data-theme=dark] .r7f button.r7f-yes,html[data-theme=dark] .r7f button:not(.r7f-no):hover{background:#ff8a80;color:#1b1b1b}
+html[data-theme=dark] .r7f button.r7f-no{border-color:var(--line);color:var(--ink)}
+</style>
+<script id="reset7-js">
+(()=>{"use strict";
+/* ⚙ Settings → Factory reset: wipes everything this site keeps on the device (local storage, session storage,
+   IndexedDB, offline cache, service worker, cookies) and reloads, so the site starts like the very first visit. */
+const LG=["el", "en", "es", "he", "fa", "sq", "ru", "de", "fr", "zh", "hi", "ar", "bn", "pt", "id"],TT={"h": ["Επαναφορά από την αρχή", "Factory reset", "Restablecer todo", "איפוס להגדרות היצרן", "بازنشانی کامل", "Rikthe si në fillim", "Сброс до начальных настроек", "Auf Werkseinstellungen zurücksetzen", "Réinitialisation complète", "恢复出厂设置", "शुरुआती सेटिंग पर रीसेट", "إعادة الضبط الكاملة", "শুরুর অবস্থায় ফেরত", "Restaurar tudo", "Atur ulang ke awal"], "d": ["Σβήνει από αυτή τη συσκευή ό,τι έχει αποθηκεύσει η σελίδα: τμήμα και πρόσφατα, γλώσσα, θέμα και χρώμα, ατζέντα εργασιών, απουσίες, ρεκόρ και όλες τις ρυθμίσεις. Η σελίδα θα ανοίξει όπως την πρώτη φορά.", "Erases everything this site has saved on this device: your class and recents, language, theme and colour, homework planner, absences, high score and every setting. The site will open as it did the first time.", "Borra todo lo que el sitio guardó en este dispositivo: tu grupo y recientes, idioma, tema y color, agenda de tareas, faltas, récord y todos los ajustes. El sitio se abrirá como la primera vez.", "מוחק את כל מה שהאתר שמר במכשיר הזה: הכיתה והאחרונים, שפה, ערכת נושא וצבע, מחברת שיעורי בית, היעדרויות, שיא וכל ההגדרות. האתר ייפתח כמו בפעם הראשונה.", "هر چیزی را که سایت روی این دستگاه ذخیره کرده پاک می‌کند: کلاس و موارد اخیر، زبان، پوسته و رنگ، دفتر تکلیف، غیبت‌ها، رکورد و همهٔ تنظیمات. سایت مثل بار اول باز می‌شود.", "Fshin gjithçka që faqja ka ruajtur në këtë pajisje: klasën dhe të fundit, gjuhën, temën dhe ngjyrën, agjendën e detyrave, mungesat, rekordin dhe çdo cilësim. Faqja do të hapet si herën e parë.", "Удаляет всё, что сайт сохранил на этом устройстве: класс и недавние, язык, тему и цвет, планер заданий, пропуски, рекорд и все настройки. Сайт откроется как в первый раз.", "Löscht alles, was die Seite auf diesem Gerät gespeichert hat: Klasse und zuletzt Angesehenes, Sprache, Design und Farbe, Hausaufgabenplaner, Fehlstunden, Rekord und alle Einstellungen. Die Seite öffnet sich wie beim ersten Mal.", "Efface tout ce que le site a enregistré sur cet appareil : ta classe et les récents, la langue, le thème et la couleur, le planificateur de devoirs, les absences, le record et tous les réglages. Le site s’ouvrira comme la première fois.", "清除本网站在这台设备上保存的所有内容：班级和最近记录、语言、主题和颜色、作业计划、缺勤、最高分以及所有设置。网站将像第一次打开时一样。", "इस साइट ने इस डिवाइस पर जो कुछ भी सहेजा है, सब मिटा देता है: तुम्हारी कक्षा और हाल की, भाषा, थीम और रंग, होमवर्क प्लानर, अनुपस्थितियाँ, रिकॉर्ड और सारी सेटिंग। साइट पहली बार की तरह खुलेगी।", "يمسح كل ما حفظه الموقع على هذا الجهاز: صفك والأخيرة، اللغة، المظهر واللون، مخطِّط الواجبات، الغيابات، أفضل نتيجة وكل الإعدادات. سيفتح الموقع كما في المرة الأولى.", "এই সাইট এই ডিভাইসে যা কিছু সংরক্ষণ করেছে সব মুছে দেয়: তোমার ক্লাস ও সাম্প্রতিক, ভাষা, থিম ও রং, হোমওয়ার্ক প্ল্যানার, অনুপস্থিতি, রেকর্ড আর সব সেটিংস। সাইটটি প্রথমবারের মতো খুলবে।", "Apaga tudo o que o site salvou neste dispositivo: sua turma e recentes, idioma, tema e cor, planejador de tarefas, faltas, recorde e todas as configurações. O site vai abrir como na primeira vez.", "Menghapus semua yang disimpan situs ini di perangkat ini: kelas dan riwayat terbaru, bahasa, tema dan warna, perencana PR, absen, rekor, dan semua pengaturan. Situs akan terbuka seperti pertama kali."], "btn": ["Επαναφορά όλων", "Reset everything", "Restablecer todo", "איפוס הכול", "بازنشانی همه", "Rikthe gjithçka", "Сбросить всё", "Alles zurücksetzen", "Tout réinitialiser", "全部重置", "सब कुछ रीसेट करें", "إعادة ضبط الكل", "সব রিসেট করুন", "Restaurar tudo", "Atur ulang semua"], "ask": ["Σίγουρα; Δεν αναιρείται.", "Are you sure? This can't be undone.", "¿Seguro? No se puede deshacer.", "בטוח? אי אפשר לבטל את זה.", "مطمئنی؟ قابل بازگشت نیست.", "Je i sigurt? Nuk kthehet më.", "Точно? Это нельзя отменить.", "Sicher? Das lässt sich nicht rückgängig machen.", "Tu es sûr ? C’est définitif.", "确定吗？此操作无法撤销。", "पक्का? इसे वापस नहीं किया जा सकता।", "هل أنت متأكد؟ لا يمكن التراجع عن ذلك.", "নিশ্চিত? এটা আর ফেরানো যাবে না।", "Tem certeza? Não dá para desfazer.", "Yakin? Ini tidak bisa dibatalkan."], "yes": ["Ναι, σβήσε τα όλα", "Yes, erase everything", "Sí, borrar todo", "כן, למחוק הכול", "بله، همه را پاک کن", "Po, fshiji të gjitha", "Да, удалить всё", "Ja, alles löschen", "Oui, tout effacer", "是的，全部清除", "हाँ, सब मिटाओ", "نعم، امسح كل شيء", "হ্যাঁ, সব মুছে দাও", "Sim, apagar tudo", "Ya, hapus semuanya"], "no": ["Άκυρο", "Cancel", "Cancelar", "ביטול", "انصراف", "Anulo", "Отмена", "Abbrechen", "Annuler", "取消", "रद्द करें", "إلغاء", "বাতিল", "Cancelar", "Batal"], "done": ["Έγινε επαναφορά. Η σελίδα ξαναφορτώνει…", "Everything was reset. Reloading…", "Todo restablecido. Recargando…", "הכול אופס. טוען מחדש…", "همه‌چیز بازنشانی شد. در حال بارگذاری دوباره…", "Gjithçka u rikthye. Po ringarkohet…", "Всё сброшено. Перезагрузка…", "Alles zurückgesetzt. Wird neu geladen…", "Tout a été réinitialisé. Rechargement…", "已全部重置，正在重新加载…", "सब रीसेट हो गया। फिर से लोड हो रहा है…", "تمت إعادة الضبط. جارٍ إعادة التحميل…", "সব রিসেট হয়েছে। আবার লোড হচ্ছে…", "Tudo foi restaurado. Recarregando…", "Semua sudah diatur ulang. Memuat ulang…"]};
+const L7=()=>{const l=(typeof lang==="string"&&lang)||document.documentElement.lang||"el";return LG.includes(l)?l:"en"};
+const t=k=>(TT[k]||[])[LG.indexOf(L7())]||(TT[k]||[])[1]||k;
+let box=null,asking=false;
+async function wipe(){
+  try{localStorage.clear()}catch(e){}
+  try{sessionStorage.clear()}catch(e){}
+  try{if(indexedDB&&indexedDB.databases){for(const d of await indexedDB.databases())if(d&&d.name)indexedDB.deleteDatabase(d.name)}}catch(e){}
+  try{if(window.caches)for(const k of await caches.keys())await caches.delete(k)}catch(e){}
+  try{if(navigator.serviceWorker)for(const r of await navigator.serviceWorker.getRegistrations())await r.unregister()}catch(e){}
+  try{document.cookie.split(";").forEach(c=>{const n=c.split("=")[0].trim();if(n)document.cookie=n+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/"})}catch(e){}
+}
+function draw(){if(!box)return;
+  box.innerHTML="";const h=document.createElement("h3");h.textContent=t("h");const p=document.createElement("p");p.textContent=t("d");box.append(h,p);
+  if(!asking){const b=document.createElement("button");b.type="button";b.className="r7f-go";b.textContent=t("btn");b.onclick=()=>{asking=true;draw();box.querySelector(".r7f-no").focus()};box.append(b);return}
+  const a=document.createElement("div");a.className="r7f-ask";a.setAttribute("role","alertdialog");a.setAttribute("aria-label",t("ask"));
+  const q=document.createElement("strong");q.textContent=t("ask");
+  const no=document.createElement("button");no.type="button";no.className="r7f-no";no.textContent=t("no");no.onclick=()=>{asking=false;draw();box.querySelector(".r7f-go").focus()};
+  const yes=document.createElement("button");yes.type="button";yes.className="r7f-yes";yes.textContent=t("yes");
+  yes.onclick=async()=>{yes.disabled=no.disabled=true;q.textContent=t("done");await wipe();location.replace(location.pathname)};
+  a.append(q,no,yes);box.append(a)}
+function mount(){const panel=document.getElementById("v11-panel");if(!panel)return false;if(panel.querySelector(".r7f"))return true;
+  box=document.createElement("div");box.className="r7f";box.setAttribute("data-notr","");panel.append(box);draw();return true}
+if(!mount()){const mo=new MutationObserver(()=>{if(mount())mo.disconnect()});mo.observe(document.body,{childList:true,subtree:true})}
+new MutationObserver(()=>{asking=false;draw()}).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
+window.__factoryReset=async()=>{await wipe();location.replace(location.pathname)};
 })();
 </script>
 </body>
