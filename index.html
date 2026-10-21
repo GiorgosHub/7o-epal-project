@@ -2077,7 +2077,16 @@ $("#fchips").addEventListener("click",e=>{const b=e.target.closest("[data-n]");i
 $("#fq").addEventListener("input",renderFinder);
 /* hero chip + labels */
 const nx=document.createElement("p");nx.id="nx";$("#status").after(nx);
-function labels(){const list=pinnedCls.map(n=>CLASSES.find(x=>x.n===n)).filter(Boolean);nx.hidden=!list.length;nx.textContent="";list.forEach(c=>{const d=document.createElement("span");d.style.display="block";d.textContent="⏭ "+c.n+" — "+nextLine(c);nx.append(d)});window.__labels=labels;
+const NXRM=["Αφαίρεση του {c}", "Remove {c}", "Quitar {c}", "הסרת {c}", "حذف {c}", "Hiq {c}", "Убрать {c}", "{c} entfernen", "Retirer {c}", "移除 {c}", "{c} हटाएँ", "إزالة {c}", "{c} সরান", "Remover {c}", "Hapus {c}"],NXL=["el","en","es","he","fa","sq","ru","de","fr","zh","hi","ar","bn","pt","id"];
+nx.addEventListener("click",e=>{const x=e.target.closest(".nx-x");if(!x)return;const i=[...nx.querySelectorAll(".nx-x")].indexOf(x);removeClass(x.dataset.rm);labels();
+  const r=nx.querySelectorAll(".nx-x");if(r.length)r[Math.min(i,r.length-1)].focus();if(window.__recDraw)window.__recDraw()});
+/* one line per recent class under the clock, each with × to remove that class */
+function labels(){const list=pinnedCls.map(n=>CLASSES.find(x=>x.n===n)).filter(Boolean);nx.hidden=!list.length;
+  const a=document.activeElement,fid=a&&a.classList&&a.classList.contains("nx-x")?a.dataset.rm:null;nx.textContent="";
+  list.forEach(c=>{const d=document.createElement("span");d.className="nx-row";const tx=document.createElement("span");tx.className="nx-t";tx.textContent="⏭ "+c.n+" — "+nextLine(c);
+    const x=document.createElement("button");x.type="button";x.className="nx-x";x.dataset.rm=c.n;x.textContent="×";x.setAttribute("data-notr","");
+    const lbl=(NXRM[NXL.indexOf(typeof lang==="string"?lang:"el")]||NXRM[1]).replace("{c}",c.n);x.setAttribute("aria-label",lbl);x.title=lbl;
+    d.append(tx,x);nx.append(d);if(fid===c.n)x.focus()});window.__labels=labels;
   $("#nvf").textContent=X("Καθηγητές & αίθουσες","Teachers & rooms");$("#fh").textContent=X("Βρες καθηγητή ή αίθουσα","Find a teacher or room");
   $("#flead").textContent=X("Δες το πρόγραμμα οποιουδήποτε εκπαιδευτικού ή αίθουσας, κατευθείαν από το PDF του σχολείου.","See any teacher's or room's timetable, built straight from the school's PDF.");
   $("#fq").placeholder=X("Αναζήτηση…","Search…");$$("#ftabs .chip").forEach(b=>b.textContent=b.dataset.f==="t"?X("Εκπαιδευτικοί","Teachers"):X("Αίθουσες","Rooms"));vlab()}
@@ -3760,7 +3769,12 @@ footer a:hover{color:var(--tape)!important}
 .mine-it .chip{border:0!important;border-radius:0!important;margin:0;background:transparent!important;color:inherit!important;box-shadow:none!important}
 .mine-x{border:0;border-left:2px solid #20252b;background:transparent;color:inherit;padding:0 13px;cursor:pointer;font:inherit;font-weight:800;font-size:1.1rem;line-height:1}
 .mine-x:hover{background:#20252b;color:#fffaf0}
-#nx span{display:block}
+#nx .nx-row{display:flex;align-items:flex-start;gap:10px;padding:2px 0}
+#nx .nx-t{flex:1;min-width:0}
+#nx .nx-x{flex:none;width:32px;height:32px;margin-top:-4px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:inherit;font:inherit;font-size:1.05rem;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
+#nx .nx-x:hover{border-color:currentColor;color:var(--ink)}
+#nx .nx-x:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media (pointer:coarse){#nx .nx-x{width:40px;height:40px;margin-top:-8px}}
 </style>
 
 <style id="intro-and-layout-fix">
@@ -6745,6 +6759,7 @@ const rt=(k,c)=>{const i=RL.indexOf(typeof lang==="string"?lang:"el");return((RT
 /* recent classes: tap to open, × removes one, "Clear" removes them all */
 const drawRec=()=>{const l=(typeof pinnedCls!=="undefined"?pinnedCls:[]).slice().reverse().map(n=>CLASSES.find(c=>c.n===n)).filter(Boolean).slice(0,6);
   rec.innerHTML=l.length?`<span>${esc(s("rec"))}</span>`+l.map(c=>`<span class="sf7-ri${c.n===mine?" on":""}"><button type="button" class="sf7-rc${c.n===mine?" on":""}" data-c="${esc(c.n)}" aria-pressed="${c.n===mine}">${esc(c.n)}</button><button type="button" class="sf7-rx" data-rm="${esc(c.n)}" aria-label="${esc(rt("rm",c.n))}" title="${esc(rt("rm",c.n))}">×</button></span>`).join("")+(l.length>1?`<button type="button" class="sf7-rclr" aria-label="${esc(rt("clrL"))}">${esc(rt("clr"))}</button>`:""):""};
+window.__recDraw=()=>drawRec();
 const forget=n=>{if(typeof removeClass==="function")removeClass(n);else{pinnedCls=pinnedCls.filter(x=>x!==n);try{localStorage.setItem("pinnedCls",JSON.stringify(pinnedCls))}catch(e){}}};
 rec.addEventListener("click",e=>{const x=e.target.closest("[data-rm]");
   if(x){const n=x.dataset.rm,i=[...rec.querySelectorAll("[data-rm]")].indexOf(x);forget(n);drawRec();const r=rec.querySelectorAll("[data-rm]");(r[Math.min(i,r.length-1)]||q).focus();return}
