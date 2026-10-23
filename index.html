@@ -3277,6 +3277,9 @@ window.cookieConsent={get:getConsent,open:show,getCookie,hasFunctionalCookies:()
    Each text has el / en / es versions (en is used as fallback).
    ====================================================================== */
 const BUG_POSTS=[
+  {date:"2026-10-23",tag:"upd",
+   t:{"el": "Απουσίες καθηγητών στην αρχική", "en": "Teacher absences on the home page", "es": "Ausencias de docentes en la portada", "he": "היעדרויות מורים בעמוד הבית", "fa": "غیبت معلمان در صفحهٔ اول", "sq": "Mungesat e mësuesve në faqen kryesore", "ru": "Отсутствия учителей на главной", "de": "Abwesende Lehrkräfte auf der Startseite", "fr": "Absences des enseignants sur l’accueil", "zh": "首页显示教师缺勤", "hi": "होम पेज पर शिक्षकों की अनुपस्थिति", "ar": "غياب المعلمين في الصفحة الرئيسية", "bn": "হোম পেজে শিক্ষকদের অনুপস্থিতি", "pt": "Ausências de professores na página inicial", "id": "Guru yang tidak hadir di beranda"},
+   b:{"el": "Κάτω από το ρολόι φαίνεται πλέον ποιοι καθηγητές απουσιάζουν σήμερα και ποιες ώρες, και τι σημαίνει αυτό για τα δικά σου τμήματα. Στην εύρεση καθηγητή γράφει «Απουσιάζει σήμερα». Τις απουσίες τις καταχωρούν οι διαχειριστές με κωδικό, από τις ⚙ Ρυθμίσεις.", "en": "Under the clock you can now see which teachers are absent today and for which periods, and what that means for your own classes. The teacher finder says “Absent today”. Admins add absences with a password, from ⚙ Settings.", "es": "Bajo el reloj ahora se ve qué docentes faltan hoy y en qué horas, y qué significa para tus grupos. El buscador de docentes indica «Ausente hoy». Los administradores añaden las ausencias con contraseña, desde ⚙ Ajustes.", "he": "מתחת לשעון רואים עכשיו אילו מורים נעדרים היום ובאילו שיעורים, ומה זה אומר לכיתות שלכם. באיתור המורים כתוב «נעדר/ת היום». המנהלים מוסיפים היעדרויות עם סיסמה, מ־⚙ הגדרות.", "fa": "زیر ساعت حالا می‌بینی کدام معلمان امروز غایب‌اند و در کدام زنگ‌ها، و این برای کلاس‌های خودت چه معنایی دارد. در یافتن معلم نوشته می‌شود «امروز غایب است». مدیران غیبت‌ها را با رمز از ⚙ تنظیمات ثبت می‌کنند.", "sq": "Poshtë orës tani shihet cilët mësues mungojnë sot dhe në cilat orë, si dhe çfarë do të thotë kjo për klasat e tua. Te gjetja e mësuesit shkruan «Mungon sot». Administratorët i shtojnë mungesat me fjalëkalim, nga ⚙ Cilësimet.", "ru": "Под часами теперь видно, какие учителя сегодня отсутствуют и на каких уроках, и что это значит для твоих классов. В поиске учителя написано «Сегодня отсутствует». Администраторы добавляют отсутствия с паролем в ⚙ Настройках.", "de": "Unter der Uhr siehst du jetzt, welche Lehrkräfte heute fehlen und in welchen Stunden, und was das für deine Klassen bedeutet. Die Lehrkraft-Suche zeigt „Heute abwesend“. Admins tragen Abwesenheiten mit Passwort unter ⚙ Einstellungen ein.", "fr": "Sous l’horloge, tu vois maintenant quels enseignants sont absents aujourd’hui et à quelles heures, et ce que cela change pour tes classes. La recherche d’enseignant indique « Absent aujourd’hui ». Les administrateurs ajoutent les absences avec un mot de passe, dans ⚙ Réglages.", "zh": "时钟下方现在会显示今天哪些老师缺席、缺席哪几节，以及这对你的班级有什么影响。找老师功能中会显示“今天缺席”。管理员可在 ⚙ 设置中凭密码添加缺勤。", "hi": "घड़ी के नीचे अब दिखता है कि आज कौन से शिक्षक अनुपस्थित हैं और किन पीरियड में, और तुम्हारी कक्षाओं के लिए इसका क्या मतलब है। शिक्षक खोज में “आज अनुपस्थित” लिखा आता है। एडमिन ⚙ सेटिंग से पासवर्ड के साथ अनुपस्थिति जोड़ते हैं।", "ar": "تحت الساعة يظهر الآن المعلمون الغائبون اليوم وفي أي حصص، وما يعنيه ذلك لصفوفك. ويكتب البحث عن المعلمين «غائب اليوم». يضيف المسؤولون الغياب بكلمة مرور من ⚙ الإعدادات.", "bn": "ঘড়ির নিচে এখন দেখা যায় আজ কোন শিক্ষক অনুপস্থিত এবং কোন পিরিয়ডে, আর তোমার ক্লাসের জন্য এর মানে কী। শিক্ষক খোঁজায় লেখা থাকে “আজ অনুপস্থিত”। অ্যাডমিনরা ⚙ সেটিংস থেকে পাসওয়ার্ড দিয়ে অনুপস্থিতি যোগ করেন।", "pt": "Abaixo do relógio agora aparecem os professores ausentes hoje e em quais aulas, e o que isso muda para as suas turmas. A busca de professores mostra “Ausente hoje”. Os administradores adicionam as ausências com senha, em ⚙ Configurações.", "id": "Di bawah jam kini terlihat guru mana yang tidak hadir hari ini dan di jam berapa, serta apa artinya bagi kelasmu. Pencari guru menampilkan “Tidak hadir hari ini”. Admin menambahkan ketidakhadiran dengan kata sandi, dari ⚙ Pengaturan."}},
   {date:"2026-10-22",tag:"fix",
    t:{"el": "Τα κουμπιά δεν κρύβονται πια στην εφαρμογή του iPhone", "en": "Buttons no longer hidden in the iPhone app", "es": "Los botones ya no se ocultan en la app del iPhone", "he": "הכפתורים כבר לא מוסתרים באפליקציה באייפון", "fa": "دکمه‌ها دیگر در برنامهٔ آیفون پنهان نمی‌شوند", "sq": "Butonat nuk fshihen më në aplikacionin e iPhone", "ru": "Кнопки больше не прячутся в приложении на iPhone", "de": "Tasten in der iPhone-App nicht mehr verdeckt", "fr": "Les boutons ne sont plus cachés dans l’appli sur iPhone", "zh": "iPhone 应用中的按钮不再被遮挡", "hi": "iPhone ऐप में बटन अब छिपते नहीं", "ar": "لم تعد الأزرار مخفية في تطبيق iPhone", "bn": "iPhone অ্যাপে বোতাম আর লুকিয়ে থাকে না", "pt": "Os botões não ficam mais escondidos no app do iPhone", "id": "Tombol tidak lagi tersembunyi di aplikasi iPhone"},
    b:{"el": "Όταν η σελίδα είχε εγκατασταθεί ως εφαρμογή στο κινητό, τα κουμπιά ⚙ Ρυθμίσεις, μενού και γλώσσας έμπαιναν κάτω από την ώρα και την μπαταρία στο πάνω μέρος της οθόνης. Τώρα η κεφαλίδα και τα μενού της ξεκινούν κάτω από αυτή τη γραμμή.", "en": "When the site was installed as an app on a phone, the ⚙ Settings, menu and language buttons sat under the clock and battery at the top of the screen. Now the header and its menus start below that bar.", "es": "Cuando el sitio estaba instalado como app en el móvil, los botones de ⚙ Ajustes, menú e idioma quedaban bajo la hora y la batería en la parte superior. Ahora el encabezado y sus menús empiezan debajo de esa barra.", "he": "כשהאתר הותקן כאפליקציה בטלפון, כפתורי ⚙ הגדרות, התפריט והשפה הוסתרו מתחת לשעה ולסוללה בראש המסך. עכשיו הכותרת והתפריטים שלה מתחילים מתחת לפס הזה.", "fa": "وقتی سایت به‌صورت برنامه روی گوشی نصب بود، دکمه‌های ⚙ تنظیمات، منو و زبان زیر ساعت و باتری بالای صفحه می‌رفتند. حالا سرصفحه و منوهایش زیر آن نوار شروع می‌شوند.", "sq": "Kur faqja ishte instaluar si aplikacion në telefon, butonat ⚙ Cilësimet, menyja dhe gjuha binin nën orën dhe baterinë në krye të ekranit. Tani koka e faqes dhe menytë e saj fillojnë poshtë asaj shiriti.", "ru": "Когда сайт был установлен как приложение на телефоне, кнопки ⚙ Настроек, меню и языка оказывались под часами и батареей вверху экрана. Теперь шапка и её меню начинаются ниже этой строки.", "de": "Wenn die Seite als App auf dem Handy installiert war, lagen die Tasten ⚙ Einstellungen, Menü und Sprache unter Uhrzeit und Akku am oberen Rand. Jetzt beginnen die Kopfzeile und ihre Menüs unterhalb dieser Leiste.", "fr": "Quand le site était installé comme appli sur le téléphone, les boutons ⚙ Réglages, menu et langue passaient sous l’heure et la batterie en haut de l’écran. Désormais l’en-tête et ses menus commencent sous cette barre.", "zh": "当网站作为应用安装在手机上时，⚙ 设置、菜单和语言按钮会被屏幕顶部的时间和电量栏挡住。现在页眉及其菜单会从这一栏下方开始显示。", "hi": "जब साइट फ़ोन पर ऐप के रूप में इंस्टॉल थी, तो ⚙ सेटिंग, मेनू और भाषा के बटन स्क्रीन के ऊपर समय और बैटरी के नीचे छिप जाते थे। अब हेडर और उसके मेनू उस पट्टी के नीचे से शुरू होते हैं।", "ar": "عندما كان الموقع مثبتًا كتطبيق على الهاتف، كانت أزرار ⚙ الإعدادات والقائمة واللغة تختفي تحت الساعة والبطارية أعلى الشاشة. الآن يبدأ الشريط العلوي وقوائمه أسفل ذلك الشريط.", "bn": "সাইটটি ফোনে অ্যাপ হিসেবে ইনস্টল থাকলে ⚙ সেটিংস, মেনু ও ভাষার বোতাম পর্দার ওপরে সময় আর ব্যাটারির নিচে চলে যেত। এখন হেডার আর তার মেনু ওই বারের নিচ থেকে শুরু হয়।", "pt": "Quando o site estava instalado como app no celular, os botões de ⚙ Configurações, menu e idioma ficavam sob a hora e a bateria no topo da tela. Agora o cabeçalho e seus menus começam abaixo dessa barra.", "id": "Saat situs dipasang sebagai aplikasi di ponsel, tombol ⚙ Pengaturan, menu, dan bahasa tertutup jam dan baterai di bagian atas layar. Sekarang header dan menunya dimulai di bawah bilah itu."}},
@@ -7165,7 +7168,7 @@ function renderTeacher(){const box=$(".lv7-tres"),q=fold(tq);hiT="";
   const names=[...teachers.keys()].filter(x=>fold(x).includes(q)||fold(tl(x)).includes(q));
   if(!names.length){box.innerHTML=`<p class="lv7-s">${esc(t("tNone"))}</p>`;return}
   const exact=names.find(x=>fold(x)===q||fold(tl(x))===q);const show=exact?[exact]:names.slice(0,4);
-  box.innerHTML=show.map(n=>{const list=teachers.get(n),cur=state==="brk"?[]:at(list,sd,sp);let h=`<div class="lv7-t"><h4>${esc(tl(n))}${L7()!=="el"?` <small>${esc(n)}</small>`:""}</h4>`;
+  box.innerHTML=show.map(n=>{const list=teachers.get(n),cur=state==="brk"?[]:at(list,sd,sp);let h=`<div class="lv7-t"><h4>${esc(tl(n))}${L7()!=="el"?` <small>${esc(n)}</small>`:""}</h4>`+(window.__abs7?window.__abs7(n,sd):"");
     if(cur.length){const e=cur[0];if(show.length===1)hiT=e.r;h+=`<p class="lv7-k">${esc(t("tIn",{r:roomName(e.r)}))}</p><p class="lv7-l"><b>${esc(e.c)}</b> · ${esc(tr(e.s))}</p>`;
       let f=-1;for(let q2=sp+1;q2<P.length;q2++){if(!at(list,sd,q2).length){f=q2;break}}
       h+=`<p class="lv7-s">${esc(f<0?t("tNoFree"):t("tNextFree",{p:perN(f),t:hm(P[f][0])}))}</p>`;
@@ -7178,6 +7181,7 @@ function renderText(){$(".lv7-h").textContent=t("title");$(".lv7-lead").textCont
   $(".lv7-tl").textContent=t("tq");$("#lv7-tq").placeholder=t("tph");$(".lv7-ind").textContent=t("ind");yard.textContent=t("yard");fillSelects();teacherList()}
 function render(){sync();renderStatus();renderCard();renderBoard();renderTeacher();place()}
 function choose(r){pick=r===pick?"":r;render()}
+addEventListener("abs7",()=>render());
 
 panel.addEventListener("click",e=>{const c=e.target.closest(".lv7-chip,.lv7-go");if(c){pick=c.dataset.r;render();aimAt(pick);if(c.classList.contains("lv7-go"))stage.scrollIntoView({behavior:"smooth",block:"center"});return}
   if(e.target.closest(".lv7-now")){live=true;render()}});
@@ -7635,5 +7639,163 @@ body>header{padding-top:var(--sat)}
 }
 html{scroll-padding-top:calc(70px + var(--sat))}
 </style>
+<style id="abs7-css">
+#ab7{margin:-8px 0 20px;padding:12px 14px;border-radius:14px;border:1.5px solid color-mix(in srgb,#d97706 55%,var(--line));background:color-mix(in srgb,#f59e0b 10%,transparent)}
+#ab7 h3{margin:0 0 6px;font-size:.95rem}
+#ab7 h4{margin:10px 0 4px;font-size:.86rem;color:var(--steel)}
+#ab7 ul{margin:0;padding:0;list-style:none;display:grid;gap:3px;font-size:.9rem}
+#ab7 li span{color:var(--steel)}
+.abs7-k{color:#b45309;font-weight:700}
+html[data-theme=dark] .abs7-k{color:#fbbf24}
+.ab7-dlg{border:1.5px solid var(--ink);border-radius:20px;padding:0;width:min(640px,calc(100vw - 20px));max-height:calc(100dvh - 30px);background:var(--card);color:var(--ink);box-shadow:var(--sh)}
+.ab7-dlg::backdrop{background:rgba(0,0,0,.45)}
+.ab7-in{padding:18px;display:flex;flex-direction:column;gap:12px;max-height:calc(100dvh - 34px);overflow:auto;box-sizing:border-box}
+.ab7-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ab7-top h2{margin:0;font-size:1.25rem}
+.ab7-lead,.ab7-ls,.ab7-sum,.ab7-day{margin:0;font-size:.86rem;color:var(--steel)}
+.ab7-dlg label{font-weight:700;font-size:.88rem}
+.ab7-dlg input{font:inherit;min-height:44px;padding:8px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);box-sizing:border-box}
+.ab7-dlg button{font:inherit;min-height:44px;padding:0 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-weight:600;cursor:pointer}
+.ab7-dlg button:focus-visible,.ab7-dlg input:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.ab7-dlg .ab7-pri{background:var(--tape);color:var(--on-tape);border-color:var(--ink);font-weight:800}
+.ab7-dlg .ab7-x{width:44px;padding:0}
+.ab7-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+.ab7-row.end{justify-content:flex-end}
+.ab7-add input{flex:1 1 200px}
+.ab7-list{display:flex;flex-direction:column;gap:10px}
+.ab7-item{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px 12px;margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ab7-item legend{font-weight:800;padding:0 6px}
+.ab7-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ab7-dlg .ab7-c{min-width:44px;padding:0 10px;border-radius:99px}
+.ab7-dlg .ab7-c.teach{border-color:var(--ink)}
+.ab7-dlg .ab7-c.on{background:var(--tape);color:var(--on-tape);border-color:var(--ink);font-weight:800}
+.ab7-dlg .ab7-rm{align-self:flex-start;color:#b42318;border-color:color-mix(in srgb,#b42318 50%,var(--line))}
+.ab7-empty{margin:0;padding:14px;border:1.5px dashed var(--line);border-radius:14px;color:var(--steel);text-align:center}
+.ab7-msg{margin:0;min-height:1.2em;font-weight:600;color:#b42318}
+.ab7-msg.ok{color:#15803d}
+html[data-theme=dark] .ab7-msg{color:#ff8a80}html[data-theme=dark] .ab7-msg.ok{color:#86efac}
+.ab7-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.ab7-login{gap:10px}
+</style>
+<script id="abs7-js">
+(()=>{"use strict";
+/* Teacher absences. Admins add them in ⚙ Settings → "Teacher absences (admin)" (password checked on the server);
+   everyone sees today's list under the clock, what it means for their classes, and a note in the teacher finder. */
+const de=document.documentElement,LG=["el","en","es","he","fa","sq","ru","de","fr","zh","hi","ar","bn","pt","id"],TT={"head": ["Απουσίες καθηγητών σήμερα", "Teachers absent today", "Docentes ausentes hoy", "מורים שנעדרים היום", "معلمان غایب امروز", "Mësues që mungojnë sot", "Отсутствующие сегодня учителя", "Heute abwesende Lehrkräfte", "Enseignants absents aujourd’hui", "今天缺席的老师", "आज अनुपस्थित शिक्षक", "المعلمون الغائبون اليوم", "আজ অনুপস্থিত শিক্ষক", "Professores ausentes hoje", "Guru yang tidak hadir hari ini"], "allDay": ["όλη μέρα", "all day", "todo el día", "כל היום", "تمام روز", "gjithë ditën", "весь день", "ganztägig", "toute la journée", "全天", "पूरे दिन", "طوال اليوم", "সারাদিন", "o dia todo", "seharian"], "p1": ["ώρα {l}", "period {l}", "hora {l}", "שיעור {l}", "زنگ {l}", "ora {l}", "урок {l}", "Stunde {l}", "heure {l}", "第 {l} 节", "पीरियड {l}", "الحصة {l}", "পিরিয়ড {l}", "aula {l}", "jam ke-{l}"], "pN": ["ώρες {l}", "periods {l}", "horas {l}", "שיעורים {l}", "زنگ‌های {l}", "orët {l}", "уроки {l}", "Stunden {l}", "heures {l}", "第 {l} 节", "पीरियड {l}", "الحصص {l}", "পিরিয়ড {l}", "aulas {l}", "jam ke-{l}"], "mine": ["Τι αλλάζει στα τμήματά σου", "What changes for your classes", "Qué cambia en tus grupos", "מה משתנה בכיתות שלכם", "چه چیزی در کلاس‌هایت تغییر می‌کند", "Çfarë ndryshon në klasat e tua", "Что меняется в твоих классах", "Was sich für deine Klassen ändert", "Ce qui change pour tes classes", "你的班级受影响的课", "तुम्हारी कक्षाओं में क्या बदलता है", "ما الذي يتغير في صفوفك", "তোমার ক্লাসে কী বদলাচ্ছে", "O que muda nas suas turmas", "Yang berubah di kelasmu"], "absent": ["Απουσιάζει σήμερα", "Absent today", "Ausente hoy", "נעדר/ת היום", "امروز غایب است", "Mungon sot", "Сегодня отсутствует", "Heute abwesend", "Absent aujourd’hui", "今天缺席", "आज अनुपस्थित", "غائب اليوم", "আজ অনুপস্থিত", "Ausente hoje", "Tidak hadir hari ini"], "admin": ["🔒 Απουσίες καθηγητών (διαχείριση)", "🔒 Teacher absences (admin)", "🔒 Ausencias de docentes (admin)", "🔒 היעדרויות מורים (ניהול)", "🔒 غیبت معلمان (مدیریت)", "🔒 Mungesat e mësuesve (admin)", "🔒 Отсутствия учителей (админ)", "🔒 Abwesenheiten (Verwaltung)", "🔒 Absences des enseignants (admin)", "🔒 教师缺勤（管理）", "🔒 शिक्षक अनुपस्थिति (एडमिन)", "🔒 غياب المعلمين (إدارة)", "🔒 শিক্ষক অনুপস্থিতি (অ্যাডমিন)", "🔒 Ausências de professores (admin)", "🔒 Ketidakhadiran guru (admin)"]},AD={"title": ["Απουσίες καθηγητών", "Teacher absences"], "loginLead": ["Μόνο για διαχειριστές. Ό,τι δημοσιεύσεις φαίνεται σε όλους στην αρχική σελίδα.", "Admins only. Whatever you publish is shown to everyone on the home page."], "pass": ["Κωδικός διαχειριστή", "Admin password"], "login": ["Σύνδεση", "Sign in"], "checking": ["Έλεγχος…", "Checking…"], "wrong": ["Λάθος κωδικός.", "Wrong password."], "nostore": ["Η αποθήκευση δεν έχει ρυθμιστεί ακόμη στο Vercel (Upstash for Redis).", "Storage isn't set up on Vercel yet (Upstash for Redis)."], "nopass": ["Δεν έχει οριστεί ADMIN_PASSWORD στο Vercel.", "ADMIN_PASSWORD isn't set on Vercel."], "offline": ["Δεν υπάρχει σύνδεση. Δοκίμασε ξανά.", "No connection. Try again."], "failed": ["Δεν έγινε: {e}", "That didn't work: {e}"], "loading": ["Φόρτωση…", "Loading…"], "loaded": ["{n} απουσίες γι’ αυτή τη μέρα.", "{n} absences on this day."], "none": ["Καμία απουσία γι’ αυτή τη μέρα. Πρόσθεσε καθηγητή παρακάτω.", "No absences on this day. Add a teacher below."], "date": ["Ημερομηνία", "Date"], "weekend": ["χωρίς μαθήματα", "no lessons"], "when": ["Πότε απουσιάζει", "When"], "allDay": ["Όλη μέρα", "All day"], "teaches": ["Έχει μάθημα αυτή την ώρα", "Teaches this period"], "free": ["Δεν έχει μάθημα αυτή την ώρα", "No lesson this period"], "lessons": ["Μαθήματα της μέρας", "Lessons that day"], "noLessons": ["Δεν έχει μαθήματα αυτή τη μέρα.", "No lessons that day."], "note": ["Σημείωση", "Note"], "notePh": ["Σημείωση (προαιρετικά), π.χ. αναπληρώνει ο/η …", "Note (optional), e.g. covered by …"], "remove": ["Αφαίρεση", "Remove"], "add": ["Προσθήκη καθηγητή", "Add a teacher"], "addPh": ["Γράψε επώνυμο…", "Type a surname…"], "addBtn": ["Προσθήκη", "Add"], "unknown": ["Το «{t}» δεν βρέθηκε στο πρόγραμμα· προστέθηκε όπως το έγραψες.", "“{t}” isn't in the timetable; added as typed."], "affected": ["Επηρεάζονται {n} ώρες μαθημάτων.", "{n} lesson periods affected."], "affected1": ["Επηρεάζεται 1 ώρα μαθήματος.", "1 lesson period affected."], "saving": ["Δημοσίευση…", "Publishing…"], "published": ["Δημοσιεύτηκε για {d}.", "Published for {d}."], "publish": ["Δημοσίευση", "Publish"], "logout": ["Αποσύνδεση", "Sign out"], "close": ["Κλείσιμο", "Close"]};
+const API="/api/absences",CK="abs7cache";
+const L7=()=>{const l=(typeof lang==="string"&&lang)||de.lang||"el";return LG.includes(l)?l:"en"};
+const t=(k,o)=>{let s=(TT[k]||[])[LG.indexOf(L7())]||(TT[k]||[])[1]||k;if(o)for(const x in o)s=s.split("{"+x+"}").join(o[x]);return s};
+const a=(k,o)=>{let s=(AD[k]||[])[L7()==="el"?0:1]||k;if(o)for(const x in o)s=s.split("{"+x+"}").join(o[x]);return s};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const tl=s=>L7()==="el"?s:(window.__translit?window.__translit(s):s);
+const tr=s=>{try{return window.__tr?window.__tr(s):s}catch(e){return s}};
+const fold=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().trim();
+const online=/^https?:$/.test(location.protocol);
+/* dates in the school's time zone */
+const ymd=d=>{try{return new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Athens",year:"numeric",month:"2-digit",day:"2-digit"}).format(d)}catch(e){return d.toISOString().slice(0,10)}};
+const today=()=>ymd(new Date());
+const dayIdx=s=>{const d=new Date(s+"T12:00:00Z").getUTCDay();return d>=1&&d<=5?d-1:-1};
+const fmtDay=s=>{try{return new Date(s+"T12:00:00Z").toLocaleDateString(window.__loc?__loc():"el-GR",{timeZone:"UTC",weekday:"long",day:"numeric",month:"long"})}catch(e){return s}};
+/* teachers from the official timetable */
+const SCH=window.SCHED||[];
+const names=l=>String(l.t||"").split(" / ").map(x=>x.trim()).filter(Boolean);
+const TEACHERS=[...new Set(SCH.flatMap(pg=>pg.days.flat().flatMap(names)))].sort((x,y)=>x.localeCompare(y,"el"));
+const lessonsOf=(teacher,d)=>{const out=[];SCH.forEach(pg=>(pg.days[d]||[]).forEach(l=>{if(names(l).includes(teacher))out.push({c:pg.title,p:l.p,n:l.n||1,s:l.s,r:l.r})}));return out.sort((x,y)=>x.p-y.p)};
+const covers=(it,l)=>!it.p.length||it.p.some(p=>p>=l.p&&p<l.p+l.n);
+const PERS=()=>(typeof P!=="undefined"&&Array.isArray(P))?P.length:7;
+const whenTxt=it=>!it.p.length?t("allDay"):(it.p.length===1?t("p1",{l:it.p[0]+1}):t("pN",{l:it.p.map(x=>x+1).join(", ")}));
+
+/* ---------- data ---------- */
+let DATA={date:"",items:[]};
+try{const c=JSON.parse(localStorage.getItem(CK)||"null");if(c&&c.date===today())DATA=c}catch(e){}
+async function load(date){
+  if(!online)return null;
+  const r=await fetch(API+"?date="+encodeURIComponent(date),{cache:"no-store"});
+  if(!r.ok)throw new Error(r.status===503?"nostore":"http"+r.status);
+  const j=await r.json();j.items=Array.isArray(j.items)?j.items:[];return j}
+async function refresh(){try{const d=await load(today());if(d){DATA=d;try{localStorage.setItem(CK,JSON.stringify(d))}catch(e){}draw();dispatchEvent(new Event("abs7"))}}catch(e){}}
+window.__abs7=(teacher,d)=>{if(DATA.date!==today()||d!==dayIdx(today()))return"";const it=DATA.items.find(x=>x.t===teacher);if(!it)return"";
+  return`<p class="lv7-k abs7-k">${esc(t("absent"))} · ${esc(whenTxt(it))}${it.note?" · "+esc(it.note):""}</p>`};
+
+/* ---------- public card under the clock ---------- */
+const card=document.createElement("div");card.id="ab7";card.setAttribute("data-notr","");card.hidden=true;
+function place(){const nx=document.getElementById("nx");if(nx&&!card.isConnected)nx.after(card);return card.isConnected}
+function draw(){if(!place())return;
+  const items=DATA.date===today()?DATA.items:[];card.hidden=!items.length;if(!items.length){card.innerHTML="";return}
+  const d=dayIdx(today()),mineL=(typeof pinnedCls!=="undefined"?pinnedCls:[]);
+  const hits=[];if(d>=0)mineL.forEach(c=>{const pg=SCH.find(x=>x.title===c);if(!pg)return;(pg.days[d]||[]).forEach(l=>{const ab=names(l).map(n=>items.find(i=>i.t===n)).filter(Boolean).filter(i=>covers(i,l));if(ab.length)hits.push({c,l,ab})})});
+  hits.sort((x,y)=>x.c.localeCompare(y.c,"el")||x.l.p-y.l.p);
+  card.innerHTML=`<h3>${esc(t("head"))}</h3><ul>${items.map(i=>`<li><b>${esc(tl(i.t))}</b> · ${esc(whenTxt(i))}${i.note?` <span>· ${esc(i.note)}</span>`:""}</li>`).join("")}</ul>`+
+    (hits.length?`<h4>${esc(t("mine"))}</h4><ul class="ab7-mine">${hits.map(h=>`<li><b>${esc(h.c)}</b> · ${esc(t("p1",{l:h.l.p+1}))}: ${esc(tr(h.l.s))} <span>(${esc(h.ab.map(x=>tl(x.t)).join(", "))})</span></li>`).join("")}</ul>`:"")}
+const mo=new MutationObserver(()=>{if(!card.isConnected&&place())draw()});mo.observe(document.body,{childList:true,subtree:true});
+new MutationObserver(()=>draw()).observe(de,{attributes:true,attributeFilter:["lang"]});
+setInterval(()=>{if(card.isConnected)draw()},20000);
+document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest(".nx-x,.sf7-rx,.sf7-rclr,.sf7-rc,[data-rm]"))setTimeout(draw,50)});
+
+/* ---------- admin ---------- */
+let pass="";try{pass=sessionStorage.getItem("abs7pass")||""}catch(e){}
+let dlg=null,edit={date:today(),items:[]},msgEl=null,busy=false;
+function btn(){const g=[...document.querySelectorAll("#v11-panel .v11-group .v11-actions")].find(x=>x.querySelector('[data-v11="share"]'));if(!g||g.querySelector(".ab7-open"))return;
+  const b=document.createElement("button");b.type="button";b.className="ab7-open";b.setAttribute("data-notr","");b.textContent=t("admin");
+  b.onclick=()=>{const c=document.querySelector("#v11-panel .v11-close");if(c)c.click();openAdmin()};g.append(b)}
+new MutationObserver(btn).observe(document.body,{childList:true,subtree:true});btn();
+new MutationObserver(()=>{const b=document.querySelector(".ab7-open");if(b)b.textContent=t("admin");if(dlg&&dlg.open)renderAdmin()}).observe(de,{attributes:true,attributeFilter:["lang"]});
+async function post(body){const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+pass},body:JSON.stringify(body)});
+  const j=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(j.error||"http"+r.status);e.status=r.status;throw e}return j}
+const errText=e=>e&&e.status===401?a("wrong"):e&&(e.status===503||/storage/.test(e.message))?a("nostore"):e&&e.status===500&&/ADMIN_PASSWORD/.test(e.message)?a("nopass"):(navigator.onLine?a("failed",{e:(e&&e.message)||"?"}):a("offline"));
+function say(s,ok){if(msgEl){msgEl.textContent=s;msgEl.className="ab7-msg"+(ok?" ok":"")}}
+function openAdmin(){
+  if(!dlg){dlg=document.createElement("dialog");dlg.className="ab7-dlg";dlg.setAttribute("data-notr","");document.body.append(dlg);
+    dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});dlg.addEventListener("close",()=>{if(location.hash==="#admin")history.replaceState(null,"",location.pathname+location.search)})}
+  renderAdmin();try{dlg.showModal()}catch(e){dlg.setAttribute("open","")}
+  if(pass)loadDay(edit.date)}
+async function loadDay(date){edit={date,items:[]};renderAdmin();say(a("loading"));
+  try{const d=await load(date);edit={date,items:(d&&d.items||[]).map(i=>({t:i.t,p:(i.p||[]).slice(),note:i.note||""}))};renderAdmin();say(edit.items.length?a("loaded",{n:edit.items.length}):a("none"))}
+  catch(e){renderAdmin();say(errText(e))}}
+function renderAdmin(){if(!dlg)return;
+  if(!pass){dlg.innerHTML=`<form class="ab7-in ab7-login"><div class="ab7-top"><h2>${esc(a("title"))}</h2><button type="button" class="ab7-x" aria-label="${esc(a("close"))}">✕</button></div>
+    <p class="ab7-lead">${esc(a("loginLead"))}</p><label for="ab7-pass">${esc(a("pass"))}</label><input id="ab7-pass" type="password" autocomplete="current-password" required>
+    <p class="ab7-msg" role="status"></p><div class="ab7-row end"><button type="submit" class="ab7-pri">${esc(a("login"))}</button></div></form>`;
+    msgEl=dlg.querySelector(".ab7-msg");dlg.querySelector(".ab7-x").onclick=()=>dlg.close();
+    dlg.querySelector("form").onsubmit=async e=>{e.preventDefault();const v=dlg.querySelector("#ab7-pass").value;if(!v||busy)return;busy=true;pass=v;say(a("checking"));
+      try{await post({check:true});try{sessionStorage.setItem("abs7pass",v)}catch(er){}busy=false;loadDay(edit.date||today())}catch(er){pass="";busy=false;say(errText(er))}};
+    setTimeout(()=>{const i=dlg.querySelector("#ab7-pass");i&&i.focus()},30);return}
+  const d=dayIdx(edit.date),n=PERS();
+  const affected=d<0?0:edit.items.reduce((s,it)=>s+lessonsOf(it.t,d).filter(l=>covers(it,l)).length,0);
+  dlg.innerHTML=`<form class="ab7-in"><div class="ab7-top"><h2>${esc(a("title"))}</h2><button type="button" class="ab7-x" aria-label="${esc(a("close"))}">✕</button></div>
+   <div class="ab7-row"><label for="ab7-date">${esc(a("date"))}</label><input id="ab7-date" type="date" value="${esc(edit.date)}"><span class="ab7-day">${esc(fmtDay(edit.date))}${d<0?" · "+esc(a("weekend")):""}</span></div>
+   <div class="ab7-list">${edit.items.length?edit.items.map((it,i)=>{const ls=d<0?[]:lessonsOf(it.t,d),teach=new Set(ls.flatMap(l=>Array.from({length:l.n},(_,k)=>l.p+k)));
+     return`<fieldset class="ab7-item" data-i="${i}"><legend>${esc(it.t)}</legend>
+      <div class="ab7-chips" role="group" aria-label="${esc(a("when"))}"><button type="button" class="ab7-c${it.p.length?"":" on"}" aria-pressed="${!it.p.length}" data-all>${esc(a("allDay"))}</button>${Array.from({length:n},(_,p)=>`<button type="button" class="ab7-c${it.p.includes(p)?" on":""}${teach.has(p)?" teach":""}" aria-pressed="${it.p.includes(p)}" data-p="${p}" title="${esc(teach.has(p)?a("teaches"):a("free"))}">${p+1}</button>`).join("")}</div>
+      <p class="ab7-ls">${ls.length?esc(a("lessons"))+": "+ls.map(l=>esc(l.c+" · "+(l.p+1)+(l.n>1?"–"+(l.p+l.n):""))).join(", "):esc(d<0?"":a("noLessons"))}</p>
+      <label class="ab7-sr" for="ab7-n${i}">${esc(a("note"))}</label><input id="ab7-n${i}" class="ab7-note" value="${esc(it.note)}" maxlength="140" placeholder="${esc(a("notePh"))}">
+      <button type="button" class="ab7-rm">${esc(a("remove"))}</button></fieldset>`}).join(""):`<p class="ab7-empty">${esc(a("none"))}</p>`}</div>
+   <div class="ab7-row ab7-add"><label for="ab7-q">${esc(a("add"))}</label><input id="ab7-q" list="ab7-dl" autocomplete="off" placeholder="${esc(a("addPh"))}"><datalist id="ab7-dl">${TEACHERS.filter(x=>!edit.items.some(i=>i.t===x)).map(x=>`<option value="${esc(x)}"></option>`).join("")}</datalist><button type="button" class="ab7-addb">${esc(a("addBtn"))}</button></div>
+   <p class="ab7-sum">${esc(affected===1?a("affected1"):a("affected",{n:affected}))}</p>
+   <p class="ab7-msg" role="status"></p>
+   <div class="ab7-row end"><button type="button" class="ab7-out">${esc(a("logout"))}</button><button type="submit" class="ab7-pri">${esc(a("publish"))}</button></div></form>`;
+  msgEl=dlg.querySelector(".ab7-msg");
+  dlg.querySelector(".ab7-x").onclick=()=>dlg.close();
+  dlg.querySelector("#ab7-date").onchange=e=>{if(e.target.value)loadDay(e.target.value)};
+  const addOne=()=>{const q=dlg.querySelector("#ab7-q"),v=q.value.trim();if(!v)return;const f=TEACHERS.find(x=>x===v)||TEACHERS.find(x=>fold(x)===fold(v))||TEACHERS.find(x=>fold(x).startsWith(fold(v)));
+    const name=f||v.toUpperCase();if(!edit.items.some(i=>i.t===name))edit.items.push({t:name,p:[],note:""});renderAdmin();say(f?"":a("unknown",{t:name}));const nq=dlg.querySelector("#ab7-q");nq&&nq.focus()};
+  dlg.querySelector(".ab7-addb").onclick=addOne;
+  dlg.querySelector("#ab7-q").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();addOne()}};
+  dlg.querySelectorAll(".ab7-item").forEach(fs=>{const it=edit.items[+fs.dataset.i];
+    fs.querySelector(".ab7-chips").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.hasAttribute("data-all"))it.p=[];else{const p=+b.dataset.p;it.p=it.p.includes(p)?it.p.filter(x=>x!==p):it.p.concat(p).sort((x,y)=>x-y)}renderAdmin();const nb=dlg.querySelector(`.ab7-item[data-i="${fs.dataset.i}"] ${b.hasAttribute("data-all")?"[data-all]":`[data-p="${b.dataset.p}"]`}`);nb&&nb.focus()};
+    fs.querySelector(".ab7-note").oninput=e=>{it.note=e.target.value};
+    fs.querySelector(".ab7-rm").onclick=()=>{edit.items.splice(+fs.dataset.i,1);renderAdmin()}});
+  dlg.querySelector(".ab7-out").onclick=()=>{pass="";try{sessionStorage.removeItem("abs7pass")}catch(e){}renderAdmin()};
+  dlg.querySelector("form").onsubmit=async e=>{e.preventDefault();if(busy)return;busy=true;say(a("saving"));
+    try{const r=await post({date:edit.date,items:edit.items});busy=false;say(a("published",{d:fmtDay(edit.date)}),true);if(edit.date===today()){DATA=r;try{localStorage.setItem(CK,JSON.stringify(r))}catch(er){}draw();dispatchEvent(new Event("abs7"))}}
+    catch(er){busy=false;if(er.status===401){pass="";try{sessionStorage.removeItem("abs7pass")}catch(x){}renderAdmin()}say(errText(er))}}}
+addEventListener("hashchange",()=>{if(location.hash==="#admin")openAdmin()});
+if(location.hash==="#admin")setTimeout(openAdmin,400);
+window.__absAdmin=openAdmin;
+
+draw();refresh();setInterval(refresh,5*60*1000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)refresh()});
+})();
+</script>
 </body>
 </html>
