@@ -7642,6 +7642,16 @@ html{scroll-padding-top:calc(70px + var(--sat))}
 <style id="abs7-css">
 #ab7{margin:-8px 0 20px;padding:12px 14px;border-radius:14px;border:1.5px solid color-mix(in srgb,#d97706 55%,var(--line));background:color-mix(in srgb,#f59e0b 10%,transparent)}
 #ab7 h3{margin:0 0 6px;font-size:.95rem}
+@media(min-width:1000px){
+  .hero{grid-template-rows:1fr auto auto auto auto auto auto 1fr auto auto!important}
+  .hero>.sub{grid-row:2!important}.hero>.wx{grid-row:3!important}.hero>#v22-greet{grid-row:4!important}
+  .hero>#ab7{grid-column:1!important;grid-row:5!important;justify-self:stretch;align-self:start;margin:14px 0 4px;max-width:560px;box-sizing:border-box;padding:16px 18px;box-shadow:var(--sh-sm)}
+  .hero>h1{grid-row:6!important}.hero>#bfOpen{grid-row:7!important}
+  .hero>.hero-side{grid-row:1/9!important}
+  .hero>#mine{grid-row:8!important}.hero>.tape-wrap{grid-row:9!important}.hero>.cta{grid-row:10!important}
+  #ab7.ab7-wide h3{font-size:1.05rem;margin-bottom:10px}
+  #ab7.ab7-wide>ul:first-of-type{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px}
+}
 #ab7 h4{margin:10px 0 4px;font-size:.86rem;color:var(--steel)}
 #ab7 ul{margin:0;padding:0;list-style:none;display:grid;gap:3px;font-size:.9rem}
 #ab7 li span{color:var(--steel)}
@@ -7719,7 +7729,13 @@ window.__abs7=(teacher,d)=>{if(DATA.date!==today()||d!==dayIdx(today()))return""
 
 /* ---------- public card under the clock ---------- */
 const card=document.createElement("div");card.id="ab7";card.setAttribute("data-notr","");card.hidden=true;
-function place(){const nx=document.getElementById("nx");if(nx&&!card.isConnected)nx.after(card);return card.isConnected}
+/* computers: in the empty space of the left column, under the school name; phones: under the clock */
+const WIDE=matchMedia("(min-width:1000px)");
+function place(){const hero=document.querySelector(".hero"),sub=hero&&hero.querySelector(":scope>.sub"),nx=document.getElementById("nx");
+  if(WIDE.matches&&sub){if(card.parentNode!==hero||card.previousElementSibling!==sub)sub.after(card);card.classList.add("ab7-wide")}
+  else if(nx){if(card.previousElementSibling!==nx)nx.after(card);card.classList.remove("ab7-wide")}
+  return card.isConnected}
+try{WIDE.addEventListener("change",()=>{place();draw()})}catch(e){WIDE.addListener&&WIDE.addListener(()=>{place();draw()})}
 function draw(){if(!place())return;
   const items=DATA.date===today()?DATA.items:[];card.hidden=!items.length;if(!items.length){card.innerHTML="";return}
   const d=dayIdx(today()),mineL=(typeof pinnedCls!=="undefined"?pinnedCls:[]);
