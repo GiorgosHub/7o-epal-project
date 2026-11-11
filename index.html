@@ -184,6 +184,16 @@ tr.on{background:var(--tape);color:var(--on-tape);font-weight:700}
 .news-close{display:inline-block;margin-top:12px;font:inherit;font-size:.9rem;font-weight:600;padding:6px 10px;border:1px solid var(--line);border-radius:99px;background:transparent;color:var(--ink);cursor:pointer}
 .news-close:hover{background:var(--tape);color:var(--on-tape)}
 .news-files{display:grid;gap:8px;margin-top:14px}
+.urgent-alert{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;margin:24px 0 8px;padding:16px 18px;border:2px solid #dc2626;border-inline-start-width:7px;border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,#fee2e2 78%,var(--card)),var(--card));box-shadow:0 12px 28px rgba(185,28,28,.14)}
+.urgent-alert-icon{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;font-size:1.45rem;background:#dc2626;color:#fff;box-shadow:0 0 0 5px color-mix(in srgb,#dc2626 16%,transparent)}
+.urgent-alert-title{margin:0 0 5px;color:#991b1b;font-size:clamp(1rem,2.8vw,1.2rem);letter-spacing:.05em}
+.urgent-alert p{margin:0;line-height:1.58;font-weight:600}
+.important-announcement{position:relative;background:linear-gradient(120deg,color-mix(in srgb,#fef3c7 72%,var(--card)),var(--card));border:2px solid #f59e0b!important;border-inline-start:7px solid #dc2626!important;box-shadow:0 10px 24px rgba(180,83,9,.12)}
+.important-announcement:hover{background:linear-gradient(120deg,color-mix(in srgb,#fde68a 65%,var(--card)),var(--card))!important}
+.important-tag{display:inline-flex;align-items:center;gap:6px;margin-bottom:8px;padding:4px 9px;border-radius:99px;background:#dc2626;color:#fff;font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.important-announcement h3{margin:0 0 8px;font-size:1.05rem}
+.important-announcement p{margin:0;line-height:1.62;white-space:pre-line}
+@media(max-width:600px){.urgent-alert{grid-template-columns:1fr;padding:15px}.urgent-alert-icon{width:40px;height:40px}.important-announcement{padding:16px 14px!important}}
 .news-download{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);text-decoration:none;font-weight:500}
 .news-download:hover{border-color:var(--blue);background:var(--card);transform:translateY(-1px)}
 .news-download[aria-busy=true]{opacity:.65;pointer-events:none}
@@ -843,6 +853,10 @@ linear-gradient(180deg,#191613 0%,#13110f 55%,#0d0c0a 100%)}
     
     <p class="sub rv" data-i="sub"></p>
     <h1 class="rv" data-i="b" style="--d:.08s"></h1>
+    <aside class="urgent-alert rv" id="schoolGamesAlert" role="alert" data-notr style="--d:.1s">
+      <span class="urgent-alert-icon" aria-hidden="true">⚠️</span>
+      <div><h2 class="urgent-alert-title">🚨 ΕΚΤΑΚΤΗ ΑΝΑΚΟΙΝΩΣΗ</h2><p>ΣΧΟΛΙΚΟΙ ΑΓΩΝΕΣ ΤΗΝ ΔΕΥΤΕΡΑ 16/11/2026. ΠΑΡΑΚΑΛΟΥΝΤΑΙ ΟΛΟΙ ΟΙ ΜΑΘΗΤΕΣ ΝΑ ΠΑΡΟΥΝΕ ΓΡΑΠΤΗ ΔΗΛΩΣΗ ΑΠΟ ΤΗΝ ΓΡΑΜΜΑΤΕΙΑ ΚΑΙ ΝΑ ΤΗΝ ΦΕΡΟΥΝΕ ΜΕΧΡΙ ΤΗΝ ΠΑΡΑΣΚΕΥΗ 13/11/2026 ΓΙΑ ΤΗΝ ΣΥΜΜΕΤΟΧΗ ΤΟΥΣ ΣΤΗΝ ΥΠΟΣΤΗΡΙΞΗ ΤΗΣ ΣΧΟΛΙΚΗΣ ΜΑΣ ΟΜΑΔΑΣ. ΕΑΝ ΣΥΓΚΕΝΤΡΩΘΕΙ ΤΟ 70% ΤΩΝ ΜΑΘΗΤΩΝ, ΟΙ ΑΠΟΥΣΙΕΣ ΔΕΝ ΘΑ ΜΕΤΡΗΘΟΥΝ. ΣΑΣ ΕΥΧΑΡΙΣΤΟΥΜΕ ΓΙΑ ΤΗΝ ΣΥΝΕΡΓΑΣΙΑ ΣΑΣ.</p></div>
+    </aside>
     <button type="button" class="chip bf-open rv" id="bfOpen" aria-haspopup="dialog" style="--d:.12s"></button>
     <div class="now-card">
       <div class="now rv" style="--d:.16s"><span id="clock">--:--:--</span><span id="date"></span></div>
@@ -1283,6 +1297,26 @@ $("#mine").addEventListener("click",e=>{const x=e.target.closest("[data-rm]");if
 /* ---------- Ανακοινώσεις και σύνδεσμοι (όλα ανοίγουν μέσα στο site) ---------- */
 let newsItems=[["2026-09-25","Νέο πρόγραμμα από 28-09-2026"],["2026-09-23","Ευχαριστήρια επιστολή προς «Μπαρός Ακτινοδιαγνωστική»"],["2026-09-19","Κατάθεση δικαιολογητικών για την ΙΑ Φάση Μεταλυκειακού Έτους – Τάξη Μαθητείας"],["2026-09-18","Νέο πρόγραμμα από 21-09-2026"],["2026-09-16","Επίσκεψη Πολωνών εκπαιδευτικών στο 7ο ΕΠΑΛ Λάρισας στο πλαίσιο ευρωπαϊκού προγράμματος"],["2026-09-09","Αγιασμός 7ου ΕΠΑΛ, Παρασκευή 11-09-2026"],["2026-09-04","Πρόγραμμα Επαναληπτικών Εξετάσεων Σεπτεμβρίου 2026"],["2026-09-02","«Στολίδι» για τη Λάρισα το 7ο ΕΠΑΛ: ολοκληρώνεται η ριζική ανακαίνιση μέσω του προγράμματος «Μαριέττα Γιαννάκου»"]].map(([d,ti])=>({d,ti}));
 const newsHTML=a=>a.map((x,i)=>`<li data-news-index="${i}"><time>${fmtL(x.d)}</time><div><button class="news-toggle" type="button" aria-expanded="false" data-news-index="${i}">${esc(tt(x.ti))}</button><div class="news-body" id="news-body-${i}" hidden aria-live="polite"></div></div></li>`).join("");
+const SCHOOL_GAMES_NOTICE={
+  el:{label:"ΣΗΜΑΝΤΙΚΗ ΑΝΑΚΟΙΝΩΣΗ",alert:"🚨 ΕΚΤΑΚΤΗ ΑΝΑΚΟΙΝΩΣΗ",title:"Σχολικοί αγώνες — Δευτέρα 16/11/2026",body:"ΣΧΟΛΙΚΟΙ ΑΓΩΝΕΣ ΤΗΝ ΔΕΥΤΕΡΑ 16/11/2026. ΠΑΡΑΚΑΛΟΥΝΤΑΙ ΟΛΟΙ ΟΙ ΜΑΘΗΤΕΣ ΝΑ ΠΑΡΟΥΝΕ ΓΡΑΠΤΗ ΔΗΛΩΣΗ ΑΠΟ ΤΗΝ ΓΡΑΜΜΑΤΕΙΑ ΚΑΙ ΝΑ ΤΗΝ ΦΕΡΟΥΝΕ ΜΕΧΡΙ ΤΗΝ ΠΑΡΑΣΚΕΥΗ 13/11/2026 ΓΙΑ ΤΗΝ ΣΥΜΜΕΤΟΧΗ ΤΟΥΣ ΣΤΗΝ ΥΠΟΣΤΗΡΙΞΗ ΤΗΣ ΣΧΟΛΙΚΗΣ ΜΑΣ ΟΜΑΔΑΣ. ΕΑΝ ΣΥΓΚΕΝΤΡΩΘΕΙ ΤΟ 70% ΤΩΝ ΜΑΘΗΤΩΝ, ΟΙ ΑΠΟΥΣΙΕΣ ΔΕΝ ΘΑ ΜΕΤΡΗΘΟΥΝ. ΣΑΣ ΕΥΧΑΡΙΣΤΟΥΜΕ ΓΙΑ ΤΗΝ ΣΥΝΕΡΓΑΣΙΑ ΣΑΣ."},
+  en:{label:"IMPORTANT ANNOUNCEMENT",alert:"🚨 URGENT ANNOUNCEMENT",title:"School games — Monday 16/11/2026",body:"SCHOOL GAMES ON MONDAY 16/11/2026. ALL STUDENTS ARE ASKED TO COLLECT A WRITTEN DECLARATION FROM THE SCHOOL OFFICE AND RETURN IT BY FRIDAY 13/11/2026 TO TAKE PART IN SUPPORTING OUR SCHOOL TEAM. IF 70% OF STUDENTS PARTICIPATE, ABSENCES WILL NOT BE COUNTED. THANK YOU FOR YOUR COOPERATION."},
+  es:{label:"ANUNCIO IMPORTANTE",alert:"🚨 ANUNCIO URGENTE",title:"Juegos escolares — lunes 16/11/2026",body:"JUEGOS ESCOLARES EL LUNES 16/11/2026. SE PIDE A TODOS LOS ALUMNOS QUE RECOJAN UNA DECLARACIÓN ESCRITA EN LA SECRETARÍA Y LA ENTREGUEN HASTA EL VIERNES 13/11/2026 PARA PARTICIPAR EN EL APOYO A NUESTRO EQUIPO ESCOLAR. SI PARTICIPA EL 70 % DE LOS ALUMNOS, LAS AUSENCIAS NO SE CONTARÁN. GRACIAS POR SU COLABORACIÓN."},
+  he:{label:"הודעה חשובה",alert:"🚨 הודעה דחופה",title:"משחקי בית הספר — יום שני 16/11/2026",body:"משחקי בית הספר ביום שני 16/11/2026. כל התלמידים מתבקשים לקחת הצהרה בכתב ממזכירות בית הספר ולהחזיר אותה עד יום שישי 13/11/2026, כדי להשתתף בתמיכה בקבוצת בית הספר שלנו. אם ישתתפו 70% מהתלמידים, ההיעדרויות לא ייספרו. תודה על שיתוף הפעולה."},
+  fa:{label:"اطلاعیه مهم",alert:"🚨 اطلاعیه فوری",title:"مسابقات مدرسه — دوشنبه 16/11/2026",body:"مسابقات مدرسه در روز دوشنبه 16/11/2026 برگزار می‌شود. از همهٔ دانش‌آموزان درخواست می‌شود فرم کتبی را از دفتر مدرسه دریافت کنند و برای شرکت در حمایت از تیم مدرسه‌مان، آن را تا جمعه 13/11/2026 تحویل دهند. اگر ۷۰٪ دانش‌آموزان شرکت کنند، غیبت‌ها شمرده نخواهد شد. از همکاری شما سپاسگزاریم."},
+  sq:{label:"NJOFTIM I RËNDËSISHËM",alert:"🚨 NJOFTIM URGJENT",title:"Lojërat shkollore — e hënë 16/11/2026",body:"LOJËRAT SHKOLLORE TË HËNËN 16/11/2026. TË GJITHË NXËNËSIT LUTEN TË MARRIN NJË DEKLARATË ME SHKRIM NGA SEKRETARIA DHE TA SJELLIN DERI TË PREMTEN 13/11/2026 PËR TË MARRË PJESË NË MBËSHTETJEN E EKIPIT TONË SHKOLLOR. NËSE MERR PJESË 70% E NXËNËSVE, MUNGESAT NUK DO TË NUMËROHEN. JU FALËNDEROJMË PËR BASHKËPUNIMIN."},
+  ru:{label:"ВАЖНОЕ ОБЪЯВЛЕНИЕ",alert:"🚨 СРОЧНОЕ ОБЪЯВЛЕНИЕ",title:"Школьные соревнования — понедельник, 16.11.2026",body:"ШКОЛЬНЫЕ СОРЕВНОВАНИЯ В ПОНЕДЕЛЬНИК, 16.11.2026. ВСЕХ УЧЕНИКОВ ПРОСЯТ ПОЛУЧИТЬ ПИСЬМЕННОЕ ЗАЯВЛЕНИЕ В СЕКРЕТАРИАТЕ И ПРИНЕСТИ ЕГО ДО ПЯТНИЦЫ, 13.11.2026, ДЛЯ УЧАСТИЯ В ПОДДЕРЖКЕ НАШЕЙ ШКОЛЬНОЙ КОМАНДЫ. ЕСЛИ ПРИМЕТ УЧАСТИЕ 70% УЧЕНИКОВ, ПРОПУСКИ НЕ БУДУТ УЧИТЫВАТЬСЯ. СПАСИБО ЗА СОТРУДНИЧЕСТВО."},
+  de:{label:"WICHTIGE MITTEILUNG",alert:"🚨 DRINGENDE MITTEILUNG",title:"Schulspiele — Montag, 16.11.2026",body:"SCHULSPIELE AM MONTAG, DEN 16.11.2026. ALLE SCHÜLERINNEN UND SCHÜLER WERDEN GEBETEN, EINE SCHRIFTLICHE ERKLÄRUNG IM SEKRETARIAT ABZUHOLEN UND SIE BIS FREITAG, DEN 13.11.2026, ZUR TEILNAHME AN DER UNTERSTÜTZUNG UNSERER SCHULMANNSCHAFT ZURÜCKZUBRINGEN. WENN 70 % DER SCHÜLERINNEN UND SCHÜLER TEILNEHMEN, WERDEN DIE FEHLZEITEN NICHT GEZÄHLT. VIELEN DANK FÜR IHRE ZUSAMMENARBEIT."},
+  fr:{label:"ANNONCE IMPORTANTE",alert:"🚨 ANNONCE URGENTE",title:"Jeux scolaires — lundi 16/11/2026",body:"JEUX SCOLAIRES LE LUNDI 16/11/2026. TOUS LES ÉLÈVES SONT PRIÉS DE RETIRER UNE DÉCLARATION ÉCRITE AU SECRÉTARIAT ET DE LA RAPPORTER AU PLUS TARD LE VENDREDI 13/11/2026 POUR PARTICIPER AU SOUTIEN DE NOTRE ÉQUIPE SCOLAIRE. SI 70 % DES ÉLÈVES PARTICIPENT, LES ABSENCES NE SERONT PAS COMPTÉES. NOUS VOUS REMERCIONS DE VOTRE COOPÉRATION."},
+  zh:{label:"重要通知",alert:"🚨 紧急通知",title:"校际运动会 — 2026年11月16日，星期一",body:"校际运动会将于2026年11月16日（星期一）举行。请所有学生到学校办公室领取书面声明，并在2026年11月13日（星期五）前交回，以参加对我校校队的支持活动。若有70%的学生参加，缺勤将不计入记录。感谢大家的合作。"},
+  hi:{label:"महत्वपूर्ण घोषणा",alert:"🚨 अत्यावश्यक घोषणा",title:"स्कूल खेल — सोमवार 16/11/2026",body:"स्कूल खेल सोमवार 16/11/2026 को होंगे। सभी विद्यार्थियों से अनुरोध है कि वे कार्यालय से एक लिखित घोषणा लें और हमारी स्कूल टीम के समर्थन में भाग लेने के लिए उसे शुक्रवार 13/11/2026 तक वापस जमा करें। यदि 70% विद्यार्थी भाग लेते हैं, तो अनुपस्थितियाँ नहीं गिनी जाएँगी। आपके सहयोग के लिए धन्यवाद।"},
+  ar:{label:"إعلان مهم",alert:"🚨 إعلان عاجل",title:"الألعاب المدرسية — الاثنين 16/11/2026",body:"الألعاب المدرسية يوم الاثنين 16/11/2026. يُرجى من جميع الطلاب أخذ إقرار خطي من أمانة المدرسة وإعادته حتى يوم الجمعة 13/11/2026 للمشاركة في دعم فريق مدرستنا. إذا شارك 70٪ من الطلاب، فلن تُحتسب الغيابات. نشكركم على تعاونكم."},
+  bn:{label:"গুরুত্বপূর্ণ ঘোষণা",alert:"🚨 জরুরি ঘোষণা",title:"স্কুল ক্রীড়া — সোমবার 16/11/2026",body:"স্কুল ক্রীড়া সোমবার 16/11/2026 অনুষ্ঠিত হবে। সকল শিক্ষার্থীকে স্কুলের সচিবালয় থেকে একটি লিখিত ঘোষণা সংগ্রহ করে আমাদের স্কুল দলের সমর্থনে অংশ নিতে শুক্রবার 13/11/2026-এর মধ্যে তা জমা দিতে অনুরোধ করা হচ্ছে। শিক্ষার্থীদের ৭০% অংশগ্রহণ করলে অনুপস্থিতি গণনা করা হবে না। আপনাদের সহযোগিতার জন্য ধন্যবাদ।"},
+  pt:{label:"AVISO IMPORTANTE",alert:"🚨 AVISO URGENTE",title:"Jogos escolares — segunda-feira, 16/11/2026",body:"JOGOS ESCOLARES NA SEGUNDA-FEIRA, 16/11/2026. PEDE-SE A TODOS OS ALUNOS QUE RECOLHAM UMA DECLARAÇÃO ESCRITA NA SECRETARIA E A ENTREGUEM ATÉ SEXTA-FEIRA, 13/11/2026, PARA PARTICIPAR NO APOIO À NOSSA EQUIPA ESCOLAR. SE 70% DOS ALUNOS PARTICIPAREM, AS FALTAS NÃO SERÃO CONTABILIZADAS. AGRADECEMOS A VOSSA COLABORAÇÃO."},
+  id:{label:"PENGUMUMAN PENTING",alert:"🚨 PENGUMUMAN MENDESAK",title:"Pertandingan sekolah — Senin 16/11/2026",body:"PERTANDINGAN SEKOLAH PADA HARI SENIN 16/11/2026. SEMUA SISWA DIMINTA MENGAMBIL SURAT PERNYATAAN TERTULIS DARI TATA USAHA DAN MENGEMBALIKANNYA PALING LAMBAT JUMAT 13/11/2026 UNTUK BERPARTISIPASI DALAM MENDUKUNG TIM SEKOLAH KITA. JIKA 70% SISWA BERPARTISIPASI, KETIDAKHADIRAN TIDAK AKAN DIHITUNG. TERIMA KASIH ATAS KERJA SAMA ANDA."}
+};
+const schoolGamesNotice=()=>SCHOOL_GAMES_NOTICE[typeof lang==="string"&&SCHOOL_GAMES_NOTICE[lang]?lang:"el"];
+const schoolGamesNewsHTML=()=>{const n=schoolGamesNotice();return `<li class="important-announcement" data-important-announcement="true"><time>13–16/11/2026</time><div><span class="important-tag">⚠️ ${esc(n.label)}</span><h3>${esc(n.title)}</h3><p>${esc(n.body)}</p></div></li>`};
+const renderSchoolGamesAlert=()=>{const n=schoolGamesNotice(),box=document.getElementById("schoolGamesAlert");if(!box)return;box.querySelector(".urgent-alert-title").textContent=n.alert;box.querySelector("p").textContent=n.body};
 const LINKS=["#news","#info/mathiteia","#info/panelladikes","#info/tomeis","#info/wrario","#info/teachers2","#info/xrisima","#kanonismos","#info/vivliothiki","#info/eggrafes","#info/drastiriotites","#info/vraveuseis","#info/ergasia"];
 const addr16=()=>lang==="el"?"Δρόση και Παιωνίου, 41335 Λάρισα":(lang==="ru"?"Дроси и Пэониу":"Drosi & Paioniou")+", 41335 "+tt("Λάρισα");
 const renderCtc=()=>{const c=document.getElementById("ctc");if(c)c.innerHTML=`<span>${esc(tt("Τηλέφωνο"))}: <a href="tel:+302410670290">2410 670290</a></span><span>${esc(tt("Email σχολείου"))}: <a href="mailto:mail@7epal-laris.lar.sch.gr">mail@7epal-laris.lar.sch.gr</a></span><span>${esc(tt("Ταχυδρομική διεύθυνση"))}: ${esc(addr16())}</span>`};
@@ -1518,7 +1552,7 @@ async function checkNews(){
     newsItems=ps.map(x=>({id:x.id,d:x.date,ti:plain(x.title.rendered),content:x.content?.rendered||""}));renderNews();ensureTr();
   }catch{}
 }
-const renderNews=()=>{$("#newsList").innerHTML=newsHTML(newsItems);const h=newsItems.map(x=>`<span>◆ ${esc(tt(x.ti))}</span>`).join("");$("#tkr").innerHTML=h+h};
+const renderNews=()=>{$("#newsList").innerHTML=schoolGamesNewsHTML()+newsHTML(newsItems);const h=newsItems.map(x=>`<span>◆ ${esc(tt(x.ti))}</span>`).join("");$("#tkr").innerHTML=h+h};
 const newsDetails=html=>{
   const d=parseHTML(html);
   d.querySelectorAll("script,style,noscript,iframe,form").forEach(x=>x.remove());
@@ -1588,7 +1622,7 @@ function applyI18n(){
   $("#q").placeholder=$("#q").ariaLabel=t("ph");$("#lc").textContent=lang.toUpperCase();
   $("#lm").innerHTML=Object.keys(NAMES).map(k=>`<button role="menuitem" data-l="${k}"${k===lang?' aria-current="true"':""}>${NAMES[k]}</button>`).join("");
   $("#bells").innerHTML=P.map(([a,b],i)=>`<tr><th scope="row">${t("per",{n:i+1})}</th><td>${T(a)} – ${T(b)}</td></tr>`).join("");
-  render($("#q").value);showMine();viewerLabels();renderLinks();renderNews();renderNotes();showTab(cur);tick();
+  render($("#q").value);showMine();viewerLabels();renderLinks();renderNews();renderSchoolGamesAlert();renderNotes();showTab(cur);tick();
   $("#grn").hidden=true;document.title=A("b");
 }
 function setLang(l){lang=l;try{localStorage.setItem("lang",l)}catch{}applyI18n()}
@@ -7945,6 +7979,26 @@ render();
 new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 setInterval(render,60000);
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()});
+})();
+</script>
+<!-- Keep the main school sections in the requested order. -->
+<script id="section-order">
+(()=>{
+  const one=document.getElementById("visitor-hub");
+  if(one)one.remove();
+
+  const finder=document.getElementById("finder");
+  const sectors=document.getElementById("sectors");
+  const digital=document.getElementById("digital");
+  const holidays=document.getElementById("holidays");
+  const campus=document.getElementById("campus");
+  const info=document.getElementById("info");
+  const submit=document.getElementById("pbworks-submit");
+
+  if(finder&&sectors)finder.after(sectors);
+  if(sectors&&digital)sectors.after(digital);
+  if(holidays&&campus)holidays.after(campus);
+  if(info&&submit)info.after(submit);
 })();
 </script>
 </body>
