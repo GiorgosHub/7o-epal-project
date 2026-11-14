@@ -980,17 +980,21 @@ linear-gradient(180deg,#191613 0%,#13110f 55%,#0d0c0a 100%)}
 #tq-panel iframe{display:block;width:100%;height:152px;border:0;color-scheme:normal}
 #tq-embed{min-height:152px;display:grid;place-items:center;color:var(--steel);font-size:1.6rem}
 #tq-embed:empty::after{content:"\266A\2026"}
-#tq-auth{display:flex;gap:8px;padding:9px 10px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--paper) 65%,var(--card))}
-#tq-auth a{flex:1;min-height:32px;display:grid;place-items:center;padding:5px 9px;border:1px solid var(--line);border-radius:9px;color:var(--ink);font-size:.8rem;font-weight:700;text-decoration:none;transition:background .2s,color .2s,border-color .2s}
-#tq-auth a:hover,#tq-auth a:focus-visible{background:var(--tape);border-color:var(--tape);color:var(--on-tape);outline:0}
+#tq-auth{display:flex;flex-wrap:wrap;gap:8px;padding:9px 10px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--paper) 65%,var(--card))}
+#tq-auth a,#tq-connect,#tq-disconnect{flex:1;min-height:32px;display:grid;place-items:center;padding:5px 9px;border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);font:700 .8rem/1 inherit;text-decoration:none;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+#tq-auth a:hover,#tq-auth a:focus-visible,#tq-connect:hover,#tq-connect:focus-visible,#tq-disconnect:hover,#tq-disconnect:focus-visible{background:var(--tape);border-color:var(--tape);color:var(--on-tape);outline:0}
+#tq-account{flex-basis:100%;font-size:.78rem;font-weight:700;color:var(--steel);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #tq-dock:not(.open) #tq-panel{opacity:0;transform:translateY(12px);pointer-events:none}
 </style>
 <div id="tq-dock">
   <div id="tq-panel">
     <div id="tq-embed"></div>
     <div id="tq-auth">
+      <button type="button" id="tq-connect">Connect Spotify</button>
+      <button type="button" id="tq-disconnect" hidden>Disconnect</button>
       <a href="https://accounts.spotify.com/login" target="_blank" rel="noopener noreferrer">Sign in</a>
       <a href="https://www.spotify.com/signup" target="_blank" rel="noopener noreferrer">Sign up</a>
+      <span id="tq-account" aria-live="polite" hidden></span>
     </div>
   </div>
   <button type="button" id="tq-toggle" aria-expanded="false" aria-controls="tq-panel" aria-label="Play Toquel" title="Play Toquel">&#9834;</button>
@@ -1031,6 +1035,47 @@ linear-gradient(180deg,#191613 0%,#13110f 55%,#0d0c0a 100%)}
     }catch(e){fallback()}
   };
   var s=document.createElement("script");s.src="https://open.spotify.com/embed/iframe-api/v1";s.async=true;s.onerror=fallback;document.head.appendChild(s);
+})();
+</script>
+<script>
+/* Spotify account connection: Authorization Code with PKCE. No client secret is used or stored. */
+(function(){
+  var CLIENT_ID="65bd87740ac74502bb09215634ca2360";
+  var REDIRECT_URI="https://7o-epal-project.vercel.app/";
+  var connect=document.getElementById("tq-connect"),disconnect=document.getElementById("tq-disconnect"),account=document.getElementById("tq-account");
+  if(!connect||!disconnect||!account||!window.crypto||!crypto.subtle)return;
+  var KEY="tq-spotify-";
+  function random(size){var bytes=new Uint8Array(size);crypto.getRandomValues(bytes);return Array.from(bytes,function(b){return b.toString(16).padStart(2,"0")}).join("")}
+  function base64url(buffer){return btoa(String.fromCharCode.apply(null,new Uint8Array(buffer))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+  async function challenge(verifier){return base64url(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(verifier)))}
+  function cleanUrl(){var url=new URL(location.href);url.searchParams.delete("code");url.searchParams.delete("state");url.searchParams.delete("error");history.replaceState({},"",url.pathname+(url.search||"")+url.hash)}
+  function show(name){account.textContent="Connected as "+name;account.hidden=false;connect.hidden=true;disconnect.hidden=false}
+  function clear(){["token","name","state","verifier"].forEach(function(k){sessionStorage.removeItem(KEY+k)});account.hidden=true;connect.hidden=false;disconnect.hidden=true}
+  async function profile(token){var response=await fetch("https://api.spotify.com/v1/me",{headers:{Authorization:"Bearer "+token}});if(!response.ok)throw new Error("profile");var user=await response.json();var name=user.display_name||user.id;sessionStorage.setItem(KEY+"name",name);show(name)}
+  connect.addEventListener("click",async function(){
+    try{
+      var state=random(16),verifier=random(64),codeChallenge=await challenge(verifier);
+      sessionStorage.setItem(KEY+"state",state);sessionStorage.setItem(KEY+"verifier",verifier);
+      var auth=new URL("https://accounts.spotify.com/authorize");
+      auth.search=new URLSearchParams({client_id:CLIENT_ID,response_type:"code",redirect_uri:REDIRECT_URI,code_challenge_method:"S256",code_challenge:codeChallenge,state:state,scope:"user-read-private"}).toString();
+      location.assign(auth.href);
+    }catch(e){account.textContent="Spotify connection could not start.";account.hidden=false}
+  });
+  disconnect.addEventListener("click",clear);
+  var params=new URLSearchParams(location.search),code=params.get("code"),error=params.get("error");
+  if(error){account.textContent="Spotify connection was cancelled.";account.hidden=false;cleanUrl();return}
+  if(code){
+    (async function(){
+      var state=params.get("state"),expected=sessionStorage.getItem(KEY+"state"),verifier=sessionStorage.getItem(KEY+"verifier");cleanUrl();
+      if(!verifier||!state||state!==expected)throw new Error("state");
+      var body=new URLSearchParams({client_id:CLIENT_ID,grant_type:"authorization_code",code:code,redirect_uri:REDIRECT_URI,code_verifier:verifier});
+      var response=await fetch("https://accounts.spotify.com/api/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body});
+      if(!response.ok)throw new Error("token");var data=await response.json();sessionStorage.setItem(KEY+"token",data.access_token);await profile(data.access_token);
+    })().catch(function(){clear();account.textContent="Spotify connection failed. Please try again.";account.hidden=false});
+  }else{
+    var name=sessionStorage.getItem(KEY+"name"),token=sessionStorage.getItem(KEY+"token");
+    if(name&&token)show(name);
+  }
 })();
 </script>
 <button id="up" type="button" aria-label="Back to top">↑</button>
