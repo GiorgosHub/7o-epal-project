@@ -850,7 +850,10 @@ linear-gradient(180deg,#191613 0%,#13110f 55%,#0d0c0a 100%)}
     
     <p class="sub rv" data-i="sub"></p>
     <h1 class="rv" data-i="b" style="--d:.08s"></h1>
-    <button type="button" class="chip bf-open rv" id="bfOpen" aria-haspopup="dialog" style="--d:.12s"></button>
+    <div class="hero-actions rv" style="--d:.12s">
+      <button type="button" class="chip bf-open" id="bfOpen" aria-haspopup="dialog"></button>
+      <a class="lib-open" id="libOpen" href="https://7o-epal-project-vivliothiki.vercel.app/" target="_blank" rel="noopener" data-i="lib"></a>
+    </div>
     <div class="now-card">
       <div class="now rv" style="--d:.16s"><span id="clock">--:--:--</span><span id="date"></span></div>
       <p id="status" class="rv" style="--d:.22s" aria-live="polite"></p>
@@ -1212,6 +1215,7 @@ L.ar=Object.assign(L.ar||{},{"fs":"يرنّ الجرس الأول الساعة 8
 L.bn=Object.assign(L.bn||{},{"fs":"প্রথম ঘণ্টা বাজবে 8:15-এ, {n} মিনিট পরে।","cur":"পিরিয়ড {n} · শেষ হবে {e}-এ · {r} মিনিট বাকি।","per":"পিরিয়ড {n}","lead":"{d} থেকে কার্যকর। তোমার ক্লাস খুঁজে দেখো এখন কোন পাঠ, পরেরটা কী আর পুরো সপ্তাহ।","ok":"{t}-এ স্বয়ংক্রিয়ভাবে যাচাই করা হয়েছে।","nonew":"{t}-এ স্বয়ংক্রিয়ভাবে যাচাই করা হয়েছে। সর্বশেষ জানা রুটিন দেখানো হচ্ছে।","soon":"নতুন রুটিন শুরু হবে {d}-এ।","mine":"{c}-এর রুটিন খুলুন","view":"ক্লাস {c}-এর রুটিন","aihi":"হ্যালো! আমি ৭ম EPAL-এর সহকারী। যা খুশি জিজ্ঞেস করো: ঘণ্টার সময়, তোমার রুটিন, ঘোষণা, পাঠ, অনুশীলন, পড়াশোনা — বা অন্য যেকোনো কিছু।","aiq2":"এখন আমার কোন পাঠ?","aiph":"যা খুশি জিজ্ঞেস করো…"});
 L.pt=Object.assign(L.pt||{},{"fs":"O primeiro sinal toca às 8:15, em {n} min.","cur":"{n}º horário · termina às {e} · faltam {r} min.","per":"{n}º horário","lead":"Válido a partir de {d}. Encontre sua turma para ver a aula de agora, a próxima e a semana toda.","ok":"Verificado automaticamente às {t}.","nonew":"Verificado automaticamente às {t}. Mostrando o último horário conhecido.","soon":"Um novo horário começa em {d}.","mine":"Abrir horário {c}","view":"Horário da turma {c}","aihi":"Oi! Sou o assistente do 7º EPAL. Pergunte o que quiser: horários do sinal, seu horário, avisos, aulas, exercícios, estudos — ou qualquer outra coisa.","aiq2":"Que aula eu tenho agora?","aiph":"Pergunte qualquer coisa…"});
 L.id=Object.assign(L.id||{},{"fs":"Bel pertama berbunyi pukul 8:15, {n} menit lagi.","cur":"Jam ke-{n} · selesai pukul {e} · sisa {r} menit.","per":"Jam ke-{n}","lead":"Berlaku mulai {d}. Temukan kelasmu untuk melihat pelajaran saat ini, berikutnya, dan seminggu penuh.","ok":"Diperiksa otomatis pukul {t}.","nonew":"Diperiksa otomatis pukul {t}. Menampilkan jadwal terakhir yang diketahui.","soon":"Jadwal baru mulai {d}.","mine":"Buka jadwal {c}","view":"Jadwal kelas {c}","aihi":"Hai! Aku asisten EPAL ke-7. Tanyakan apa saja: jam bel, jadwalmu, pengumuman, pelajaran, latihan soal, studi — atau hal lainnya.","aiq2":"Pelajaran apa yang sedang kuikuti?","aiph":"Tanya apa saja…"});
+const LIBL={el:"Βιβλιοθήκη",en:"Library",es:"Biblioteca",he:"ספרייה",fa:"کتابخانه",sq:"Biblioteka",ru:"Библиотека",de:"Bibliothek",fr:"Bibliothèque",zh:"图书馆",hi:"पुस्तकालय",ar:"المكتبة",bn:"লাইব্রেরি",pt:"Biblioteca",id:"Perpustakaan"};for(const k in LIBL){(L[k]=L[k]||{}).lib=LIBL[k]};
 const NAMES={el:"Ελληνικά",en:"English",es:"Español",he:"עברית",fa:"فارسی",sq:"Shqip",ru:"Русский",de:"Deutsch",fr:"Français",zh:"中文",hi:"हिन्दी",ar:"العربية",bn:"বাংলা",pt:"Português",id:"Bahasa Indonesia"};
 const LOC={el:"el-GR",en:"en-GB",es:"es-ES",he:"he-IL",fa:"fa-IR-u-ca-gregory",sq:"sq-AL",ru:"ru-RU",de:"de-DE",fr:"fr-FR",zh:"zh-CN",hi:"hi-IN",ar:"ar-EG",bn:"bn-BD",pt:"pt-BR",id:"id-ID"},RTL=["he","fa","ar"];for(const k in LOC){try{if(!Intl.DateTimeFormat.supportedLocalesOf([LOC[k]]).length)LOC[k]="en-GB"}catch(e){}}
 let lang="";try{lang=localStorage.getItem("lang")||""}catch{}
@@ -6686,5 +6690,50 @@ document.addEventListener("visibilitychange",()=>{if(!document.hidden)render()})
   });
 })();
 </script>
+<style id="lib-link-css">
+/* Βιβλιοθήκη: a prominent link beside the bug-fixes blog. Opens the library site in a new tab. */
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:6px 0 4px;min-width:0}
+.hero-actions .bf-open{margin:0}
+.lib-open{
+  position:relative;display:inline-flex;align-items:center;gap:9px;
+  font:inherit;font-weight:800;letter-spacing:.01em;line-height:1.15;
+  padding:10px 20px;border-radius:99px;border:1.5px solid color-mix(in srgb,#1d4ed8 72%,#000);
+  color:#fff;text-decoration:none;white-space:nowrap;isolation:isolate;
+  background-image:linear-gradient(115deg,#2457e6 0%,#6d28d9 52%,#db2777 100%);
+  background-size:190% 100%;background-position:0 50%;
+  box-shadow:0 10px 24px -10px rgba(36,87,230,.85),inset 0 2px 0 rgba(255,255,255,.24);
+  transition:transform .25s var(--e),background-position .5s var(--e),box-shadow .25s var(--e);
+  animation:libPulse 3.6s ease-in-out infinite;
+}
+.lib-open::before{content:"📚";font-size:1.08em;line-height:1;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+.lib-open::after{content:"↗";font-size:.82em;font-weight:700;opacity:.92;transform:translateY(-.08em)}
+.lib-open:hover,.lib-open:focus-visible{transform:translateY(-3px) scale(1.04);background-position:100% 50%;box-shadow:0 18px 34px -12px rgba(109,40,217,.9),inset 0 2px 0 rgba(255,255,255,.3)}
+.lib-open:active{transform:translateY(-1px) scale(.995)}
+.lib-open:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+@keyframes libPulse{
+  0%,100%{box-shadow:0 10px 24px -10px rgba(36,87,230,.85),0 0 0 0 rgba(109,40,217,.45),inset 0 2px 0 rgba(255,255,255,.24)}
+  55%{box-shadow:0 12px 28px -10px rgba(109,40,217,.95),0 0 0 10px rgba(109,40,217,0),inset 0 2px 0 rgba(255,255,255,.24)}
+}
+@media (min-width:1000px){
+  .hero>.hero-actions{grid-column:1;grid-row:7;justify-self:start;z-index:1}
+}
+@media (max-width:999px){
+  .hero>.hero-actions{order:1;align-self:flex-start;max-width:100%}
+}
+@media (max-height:520px) and (orientation:landscape){
+  .hero>.hero-actions{align-self:flex-start;width:auto!important}
+}
+@media (max-width:460px){
+  .hero-actions{gap:8px}
+  .lib-open,.hero-actions .bf-open{padding:9px 15px;font-size:.92rem}
+}
+@media (max-width:370px){
+  .hero-actions{gap:7px}
+  .lib-open,.hero-actions .bf-open{padding:8px 13px;font-size:.88rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .lib-open{animation:none;transition:none}
+}
+</style>
 </body>
 </html>
